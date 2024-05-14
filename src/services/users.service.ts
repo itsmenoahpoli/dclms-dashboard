@@ -22,6 +22,20 @@ export const UsersService = {
       });
   },
 
+  updateUser: async function (id: number, userData: any) {
+    return await http
+      .patch("/accounts/" + id, userData)
+      .then((response) => {
+        toast.info("Account successfully updated");
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+
+        toast.error("Failed to update user account");
+      });
+  },
+
   createUser: async function (userData: any) {
     return await http
       .post("/accounts", { ...userData, userRoleId: +userData.userRoleId })

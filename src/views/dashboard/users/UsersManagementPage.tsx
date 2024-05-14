@@ -90,8 +90,9 @@ const UsersManagementPage: React.FC = () => {
       <UserAccountFormModal
         show={formModal.show}
         formType={formModal.selectedData ? "update" : "add"}
+        data={formModal.selectedData}
         refetch={refetch}
-        handleClose={() => handleFormModal({ show: false })}
+        handleClose={() => handleFormModal({ show: false, selectedData: undefined })}
       />
 
       <PageHeader
