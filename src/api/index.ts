@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from "axios";
 
 const instance: AxiosInstance = axios.create({
-  baseURL: "http://localhost:3005/api/v1",
+  baseURL: "https://dclms-backend-nestjs-production.up.railway.app/api/v1",
   timeout: 5000,
 });
 
