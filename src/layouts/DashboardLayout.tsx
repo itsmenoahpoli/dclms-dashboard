@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 import { FiHome, FiFileText, FiArchive, FiUsers } from "react-icons/fi";
 import { useAuthStore } from "@/stores";
 import { roleUtils } from "@/utils";
+import { USER_ROLES } from "@/constants";
 import BRAND_LOGO from "@/assets/images/brand-logo.png";
 
 const ICON_SIZE = 20;
@@ -49,7 +50,7 @@ export const DashboardLayout: React.FC = () => {
       icon: <FiUsers size={ICON_SIZE} />,
       label: "Users Management",
       url: "/dashboard/users-management",
-      show: roleUtils.checkRole("superadmin"),
+      show: roleUtils.checkRole(USER_ROLES.SUPERADMIN),
     },
   ];
 

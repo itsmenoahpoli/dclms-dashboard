@@ -4,10 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
 import { useAuthStore } from "@/stores";
 import { roleUtils } from "@/utils";
+import { USER_ROLES } from "@/constants";
 import { PageHeader } from "@/components/shared";
 import { DocumentFormModal } from "@/components/domains/documents";
 import { DocumentsService } from "@/services";
-import type { FormModal } from "@/types/shared";
+import { type FormModal } from "@/types/shared";
 
 const DocumentsManagementPage: React.FC = () => {
   const { user } = useAuthStore();
@@ -15,10 +16,10 @@ const DocumentsManagementPage: React.FC = () => {
   const { isLoading, data, refetch } = useQuery({
     queryKey: ["data-documents"],
     queryFn: async () => {
-      if (roleUtils.checkRole("superadmin")) {
+      if (roleUtils.checkRole(USER_ROLES.SUPERADMIN)) {
         return await DocumentsService.getDocumentsList();
       } else {
-        await DocumentsService.getDocumentsByDepartmentList(user!.departmentId);
+        return await DocumentsService.getDocumentsByDepartmentList(user!.departmentId);
       }
     },
   });
