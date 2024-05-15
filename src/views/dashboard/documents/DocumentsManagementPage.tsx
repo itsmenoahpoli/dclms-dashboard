@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
+import { useAuthStore } from "@/stores";
 import { roleUtils } from "@/utils";
 import { PageHeader } from "@/components/shared";
 import { DocumentFormModal } from "@/components/domains/documents";
@@ -9,9 +10,17 @@ import { DocumentsService } from "@/services";
 import type { FormModal } from "@/types/shared";
 
 const DocumentsManagementPage: React.FC = () => {
+  const { user } = useAuthStore();
+
   const { isLoading, data, refetch } = useQuery({
     queryKey: ["data-documents"],
-    queryFn: async () => await DocumentsService.getDocumentsList(),
+    queryFn: async () => {
+      if (roleUtils.checkRole("superadmin")) {
+        return await DocumentsService.getDocumentsList();
+      } else {
+        await DocumentsService.getDocumentsByDepartmentList(user!.departmentId);
+      }
+    },
   });
 
   const [formModal, setFormModal] = React.useState<FormModal>({

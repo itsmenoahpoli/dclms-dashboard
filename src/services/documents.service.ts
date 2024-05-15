@@ -12,6 +12,16 @@ export const DocumentsService = {
       });
   },
 
+  getDocumentsByDepartmentList: async function (departmentId: number) {
+    return await http
+      .get("/documents/department/" + departmentId)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to get document list");
+      });
+  },
+
   createDocument: async function (documentData: any) {
     return await http
       .post("/documents", documentData)
