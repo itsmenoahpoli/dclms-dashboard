@@ -3,7 +3,7 @@ import { Card } from "flowbite-react";
 import { FcDocument, FcRefresh, FcFolder, FcSurvey } from "react-icons/fc";
 import { PageHeader } from "@/components/shared";
 
-const ICON_SIZE = 64
+const ICON_SIZE = 64;
 
 const DashboardHomePage: React.FC = () => {
   return (
@@ -15,7 +15,7 @@ const DashboardHomePage: React.FC = () => {
           <div className="flex flex-row gap-4">
             <div className="w-full">
               <h1 className="text-md font-medium text-gray-black">DOCUMENTS</h1>
-              <h1 className="text-3xl text-black mt-4">372</h1>
+              <h1 className="text-3xl text-black mt-4">0</h1>
             </div>
             <div className="w-full flex justify-end">
               <FcDocument size={ICON_SIZE} />
@@ -26,7 +26,7 @@ const DashboardHomePage: React.FC = () => {
           <div className="flex flex-row gap-4">
             <div className="w-full">
               <h1 className="text-md font-medium text-gray-black">TO REVISE</h1>
-              <h1 className="text-3xl text-black mt-4">372</h1>
+              <h1 className="text-3xl text-black mt-4">0</h1>
             </div>
             <div className="w-full flex justify-end">
               <FcRefresh size={ICON_SIZE} />
@@ -37,7 +37,7 @@ const DashboardHomePage: React.FC = () => {
           <div className="flex flex-row gap-4">
             <div className="w-full">
               <h1 className="text-md font-medium text-gray-black">SUBMITTED FORMS</h1>
-              <h1 className="text-3xl text-black mt-4">372</h1>
+              <h1 className="text-3xl text-black mt-4">0</h1>
             </div>
             <div className="w-full flex justify-end">
               <FcFolder size={ICON_SIZE} />
@@ -48,7 +48,7 @@ const DashboardHomePage: React.FC = () => {
           <div className="flex flex-row gap-4">
             <div className="w-full">
               <h1 className="text-md font-medium text-gray-black">DEPARTMENTS</h1>
-              <h1 className="text-3xl text-black mt-4">372</h1>
+              <h1 className="text-3xl text-black mt-4">0</h1>
             </div>
             <div className="w-full flex justify-end">
               <FcSurvey size={ICON_SIZE} />

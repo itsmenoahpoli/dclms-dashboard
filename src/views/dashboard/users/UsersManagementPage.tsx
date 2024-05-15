@@ -2,11 +2,10 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
 import { PageHeader } from "@/components/shared";
-import { UserAccountFormModal } from "@/components/domains/users";
+import { UserAccountFormModal, UserRolesManageModal } from "@/components/domains/users";
 import { UsersService } from "@/services";
 import { useDialog } from "@/hooks";
-
-type FormModal = { show: boolean; selectedData?: any };
+import type { FormModal } from "@/types/shared";
 
 const UsersManagementPage: React.FC = () => {
   const { showConfirm, closeConfirm, DialogComponent } = useDialog();
@@ -105,14 +104,14 @@ const UsersManagementPage: React.FC = () => {
             Add User
           </button>
           <div className="flex max-md:flex-row gap-4">
-            <button className="h-[35px] w-full px-3 rounded bg-white text-black border border-gray-500 text-sm">Roles</button>
+            <UserRolesManageModal />
             <button className="h-[35px] w-full px-3 rounded bg-white text-black border border-gray-500 text-sm">Departments</button>
           </div>
         </div>
       </PageHeader>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
-        {isLoading ? "fetching data " : <DataTable columns={tableColumns} data={data} />}
+        {isLoading ? "fetching data " : <DataTable columns={tableColumns} data={data} persistTableHead />}
       </div>
     </div>
   );
