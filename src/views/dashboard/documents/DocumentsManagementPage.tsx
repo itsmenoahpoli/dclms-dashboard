@@ -8,14 +8,6 @@ import { DocumentFormModal } from "@/components/domains/documents";
 import { DocumentsService } from "@/services";
 import type { FormModal } from "@/types/shared";
 
-// export enum SourceDocument {
-//   QM = "Quality Management",
-//   PM = "Procedures Manual",
-//   FM = "Forms Manual",
-//   RM = "Records Management Manual",
-//   DI = "Document Information",
-// }
-
 const DocumentsManagementPage: React.FC = () => {
   const { isLoading, data, refetch } = useQuery({
     queryKey: ["data-documents"],
@@ -32,11 +24,11 @@ const DocumentsManagementPage: React.FC = () => {
   };
 
   const handleViewNotices = (documentData: any) => {
-    //
+    console.log(documentData);
   };
 
   const handleArchive = (id: number) => {
-    //
+    console.log(id);
   };
 
   const tableColumns = [
