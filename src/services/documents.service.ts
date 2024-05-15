@@ -31,8 +31,11 @@ export const DocumentsService = {
         return response.data;
       })
       .catch((error) => {
-        console.log(error);
-        toast.error("Failed to get document list");
+        if (error.response.status === 400) {
+          toast.error("Document name/url already used");
+        } else {
+          toast.error("Failed to create document");
+        }
       });
   },
 };
