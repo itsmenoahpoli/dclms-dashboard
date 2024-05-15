@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 
 const LoadComponent = (Component: React.ComponentType) => {
   return (
@@ -14,6 +14,11 @@ const LoadComponent = (Component: React.ComponentType) => {
  * Layouts
  */
 import { DashboardLayout } from "@/layouts";
+
+/**
+ * System Pages
+ */
+const Error404Page = LoadComponent(React.lazy(() => import("@/views/system/Error404Page")));
 
 /**
  * Auth Pages
@@ -31,12 +36,24 @@ const DashboardHomePage = LoadComponent(React.lazy(() => import("@/views/dashboa
 const DocumentsManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/documents/DocumentsManagementPage")));
 
 /**
+ * Document Archives Pages
+ */
+const DocumentArchivesManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/document-archives/DocumentArchivesManagementPage")));
+
+/**
  * Users Management
  */
 const UsersManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/users/UsersManagementPage")));
 
-
 export const appRoutes = createBrowserRouter([
+  {
+    path: "*",
+    element: Error404Page,
+  },
+  {
+    path: "/",
+    element: <Navigate to="/dashboard" />,
+  },
   {
     path: "/auth/login",
     element: LoginPage,
@@ -52,6 +69,10 @@ export const appRoutes = createBrowserRouter([
       {
         path: "/dashboard/documents",
         element: DocumentsManagementPage,
+      },
+      {
+        path: "/dashboard/document-archives",
+        element: DocumentArchivesManagementPage,
       },
       {
         path: "/dashboard/users-management",

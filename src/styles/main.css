@@ -22,3 +22,12 @@ select {
 [role="dialog"] {
   zoom: 0.9 !important;
 }
+
+.tabs button[aria-selected="true"] {
+  @apply bg-white text-primary;
+}
+
+.tabs button[aria-selected="true"]:focus,
+.tabs button[aria-selected="true"]:active {
+  @apply !border-none !outline-none;
+}

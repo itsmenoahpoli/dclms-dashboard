@@ -10,6 +10,7 @@ export type AuthStore = {
   SET_AUTH_DATA: (data: AuthData) => void;
   GET_AUTH_DATA: () => AuthData;
   CLEAR_AUTH_DATA: () => void;
+  IS_AUTHENTICATED: () => boolean;
 };
 
 export const useAuthStore = create<AuthStore>()(
@@ -34,6 +35,9 @@ export const useAuthStore = create<AuthStore>()(
           authToken: undefined,
           user: undefined,
         });
+      },
+      IS_AUTHENTICATED: () => {
+        return Boolean(get().authToken !== undefined && get().user !== undefined);
       },
     }),
     {

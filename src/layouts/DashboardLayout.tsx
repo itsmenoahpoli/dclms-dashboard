@@ -1,43 +1,59 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { FiHome, FiFileText, FiArchive, FiUsers } from "react-icons/fi";
+import { useAuthStore } from "@/stores";
 import BRAND_LOGO from "@/assets/images/brand-logo.png";
 
-const links = [
-  {
-    icon: <FiHome size={24} />,
-    label: "Dashboard",
-    url: "/dashboard/",
-  },
-  {
-    icon: <FiFileText size={24} />,
-    label: "Documents",
-    url: "/dashboard/documents",
-  },
-  {
-    icon: <FiArchive size={24} />,
-    label: "Archives",
-    url: "/dashboard/documents/archived",
-  },
-  {
-    icon: <FiUsers size={24} />,
-    label: "Users Management",
-    url: "/dashboard/users-management",
-  },
-];
-
-const headerLinks = [
-  {
-    label: "My Account",
-    onClick: () => console.log("my account"),
-  },
-  {
-    label: "Log Out",
-    onClick: () => console.log("logout"),
-  },
-];
-
 export const DashboardLayout: React.FC = () => {
+  const { IS_AUTHENTICATED, CLEAR_AUTH_DATA } = useAuthStore();
+
+  React.useLayoutEffect(() => {
+    if (!IS_AUTHENTICATED()) {
+      window.location.href = "/auth/login";
+    }
+  }, [IS_AUTHENTICATED]);
+
+  const handleLogout = () => {
+    CLEAR_AUTH_DATA();
+    window.location.href = "/auth/login";
+  };
+
+  const links = [
+    {
+      icon: <FiHome size={24} />,
+      label: "Dashboard",
+      url: "/dashboard/",
+    },
+    {
+      icon: <FiFileText size={24} />,
+      label: "Documents",
+      url: "/dashboard/documents",
+    },
+    {
+      icon: <FiArchive size={24} />,
+      label: "Archives",
+      url: "/dashboard/document-archives",
+    },
+    {
+      icon: <FiUsers size={24} />,
+      label: "Users Management",
+      url: "/dashboard/users-management",
+    },
+  ];
+
+  const headerLinks = [
+    {
+      label: "My Account",
+      onClick: () => console.log("my account"),
+    },
+    {
+      label: "Log Out",
+      onClick: () => {
+        handleLogout();
+      },
+    },
+  ];
+
   return (
     <div className="h-screen w-screen flex flex-row">
       <div className="h-screen w-[350px] bg-primary pt-8 max-md:hidden">

@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ToastContainer } from "react-toastify";
 import { appRoutes } from "@/router";
 
-import "@/styles/main.scss";
+import "@/styles/main.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient({
