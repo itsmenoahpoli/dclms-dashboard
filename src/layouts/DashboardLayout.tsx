@@ -12,11 +12,11 @@ export const DashboardLayout: React.FC = () => {
   const { pathname } = useLocation();
   const { IS_AUTHENTICATED, CLEAR_AUTH_DATA } = useAuthStore();
 
-  // React.useLayoutEffect(() => {
-  //   if (!IS_AUTHENTICATED()) {
-  //     window.location.href = "/auth/login";
-  //   }
-  // }, [IS_AUTHENTICATED]);
+  React.useLayoutEffect(() => {
+    if (!IS_AUTHENTICATED()) {
+      window.location.href = "/auth/login";
+    }
+  }, [IS_AUTHENTICATED]);
 
   const isSidebarLinkActive = (linkUrl: string) => {
     return linkUrl == pathname;

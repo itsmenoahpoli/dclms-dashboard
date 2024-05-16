@@ -121,11 +121,13 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
             ) : (
               <select {...register("userRoleId")} required>
                 <option value="">--</option>
-                {userRoles.map((userRole: any) => (
-                  <option value={userRole.id} key={userRole.name}>
-                    {_.startCase(userRole.name)}
-                  </option>
-                ))}
+                {userRoles
+                  .filter((userRole: any) => userRole.name !== "superadmin")
+                  .map((userRole: any) => (
+                    <option value={userRole.id} key={userRole.name}>
+                      {_.startCase(userRole.name)}
+                    </option>
+                  ))}
               </select>
             )}
           </div>
