@@ -67,6 +67,14 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     setLoading(false);
   });
 
+  const transformRoleLabel = (name: string) => {
+    if (name === "originator-per-document") {
+      return "Originator";
+    }
+
+    return name;
+  };
+
   React.useEffect(() => {
     handleCreateUsername(getValues("name"), getValues("departmentId"));
   }, [usernameParams, getValues, handleCreateUsername]);
@@ -125,7 +133,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
                   .filter((userRole: any) => userRole.name !== "superadmin")
                   .map((userRole: any) => (
                     <option value={userRole.id} key={userRole.name}>
-                      {_.startCase(userRole.name)}
+                      {_.startCase(transformRoleLabel(userRole.name))}
                     </option>
                   ))}
               </select>
