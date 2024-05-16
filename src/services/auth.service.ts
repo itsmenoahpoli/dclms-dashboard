@@ -12,11 +12,6 @@ export const AuthService = {
         const { SET_AUTH_DATA } = useAuthStore.getState();
         const { accessToken, user } = response.data;
 
-        if (response.data.message === "INVALID_ACCOUNT") {
-          setLoading(false);
-          return toast.error("Login failed, invalid credentials provided");
-        }
-
         SET_AUTH_DATA({ authToken: accessToken, user });
 
         setTimeout(() => {

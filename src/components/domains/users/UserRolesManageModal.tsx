@@ -49,7 +49,14 @@ export const UserRolesManageModal: React.FC = () => {
 
       <Modal show={show} onClose={handleClose}>
         <Modal.Header>Account Roles</Modal.Header>
-        <Modal.Body>{isLoading ? "Fetching" : <DataTable columns={tableColumns} data={data} persistTableHead />}</Modal.Body>
+        <Modal.Body>
+          <div className="flex justify-end mb-3">
+            <button className="h-[35px] px-3 rounded bg-primary text-white text-sm" onClick={handleOpen}>
+              Add Role
+            </button>
+          </div>
+          {isLoading ? "Fetching" : <DataTable columns={tableColumns} data={data} persistTableHead />}
+        </Modal.Body>
       </Modal>
     </>
   );

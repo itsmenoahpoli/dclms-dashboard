@@ -55,6 +55,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
   const handleSubmitForm = handleSubmit(async (formData) => {
     setLoading(true);
+    delete formData.password;
 
     if (props.formType === "add") {
       await UsersService.createUser(formData);
@@ -85,7 +86,6 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
       for (const [key, value] of Object.entries(props.data)) {
         // @ts-ignore
         if (key === "userRole") setValue(key, props.data.userRole.id);
-        if (key === "password") setValue(key, "");
         else setValue(key, value);
       }
     }
@@ -130,7 +130,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
               <select {...register("userRoleId")} required>
                 <option value="">--</option>
                 {userRoles
-                  .filter((userRole: any) => userRole.name !== "superadmin")
+                  .filter((userRole: any) => userRole.name !== "")
                   .map((userRole: any) => (
                     <option value={userRole.id} key={userRole.name}>
                       {_.startCase(transformRoleLabel(userRole.name))}
