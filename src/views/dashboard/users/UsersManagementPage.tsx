@@ -57,6 +57,11 @@ const UsersManagementPage: React.FC = () => {
       selector: (row: any) => row.email,
     },
     {
+      name: "Username",
+      width: "300px",
+      selector: (row: any) => row.username,
+    },
+    {
       name: "Department",
       selector: (row: any) => row.department?.name || "Unassigned",
     },
