@@ -37,8 +37,11 @@ export const UsersService = {
   },
 
   createUser: async function (userData: any) {
+    userData.userRoleId = +userData.userRoleId;
+    userData.departmentId = userData.departmentId ? +userData.departmentId : null;
+
     return await http
-      .post("/accounts", { ...userData, userRoleId: +userData.userRoleId, departmentId: +userData.departmentId })
+      .post("/accounts", userData)
       .then((response) => {
         toast.success("Account successfully created");
         return response.data;
