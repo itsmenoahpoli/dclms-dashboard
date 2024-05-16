@@ -48,7 +48,7 @@ export const UsersService = {
         if (error.response?.status === 400) {
           toast.error("E-mail already used");
         } else {
-          toast.error("Failed to delete/remove user account");
+          toast.error("Failed to add user account");
         }
       });
   },

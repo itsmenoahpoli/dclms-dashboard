@@ -55,11 +55,11 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
   const handleSubmitForm = handleSubmit(async (formData) => {
     setLoading(true);
-    delete formData.password;
 
     if (props.formType === "add") {
       await UsersService.createUser(formData);
     } else {
+      delete formData.password;
       await UsersService.updateUser(formData.id, formData);
     }
 
