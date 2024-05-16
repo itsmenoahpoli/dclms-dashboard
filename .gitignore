@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # additional files
-src/api/index.ts
+# src/api/index.ts
