@@ -24,7 +24,7 @@ export const UsersService = {
 
   updateUser: async function (id: number, userData: any) {
     return await http
-      .patch("/accounts/" + id, userData)
+      .patch("/accounts/" + id, { ...userData, userRoleId: +userData.userRoleId, departmentId: +userData.departmentId })
       .then((response) => {
         toast.info("Account successfully updated");
         return response.data;
@@ -38,7 +38,7 @@ export const UsersService = {
 
   createUser: async function (userData: any) {
     return await http
-      .post("/accounts", { ...userData, userRoleId: +userData.userRoleId })
+      .post("/accounts", { ...userData, userRoleId: +userData.userRoleId, departmentId: +userData.departmentId })
       .then((response) => {
         toast.success("Account successfully created");
         return response.data;
