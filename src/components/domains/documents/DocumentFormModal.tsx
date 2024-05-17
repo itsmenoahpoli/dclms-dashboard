@@ -23,11 +23,6 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   const { user } = useAuthStore();
   const { handleSubmit, register, reset } = useForm();
 
-  console.log({
-    originatorUserId: user!.id,
-    departmentId: user!.departmentId,
-  });
-
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSubmitForm = handleSubmit(async (formData: any) => {

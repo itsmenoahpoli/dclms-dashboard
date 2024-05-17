@@ -22,6 +22,16 @@ export const DocumentsService = {
       });
   },
 
+  getDocument: async function (id: number) {
+    return await http
+      .get("/documents/" + id)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to get document information");
+      });
+  },
+
   createDocument: async function (documentData: any) {
     return await http
       .post("/documents", documentData)

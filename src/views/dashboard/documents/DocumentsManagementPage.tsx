@@ -6,9 +6,14 @@ import { useAuthStore } from "@/stores";
 import { roleUtils } from "@/utils";
 import { USER_ROLES } from "@/constants";
 import { PageHeader } from "@/components/shared";
-import { DocumentFormModal } from "@/components/domains/documents";
+import { DocumentFormModal, DocumentInformationModal } from "@/components/domains/documents";
 import { DocumentsService } from "@/services";
 import { type FormModal } from "@/types/shared";
+
+type DocumentInformationModal = {
+  show: boolean;
+  selectedDataId?: number;
+};
 
 const DocumentsManagementPage: React.FC = () => {
   const { user } = useAuthStore();
@@ -16,9 +21,11 @@ const DocumentsManagementPage: React.FC = () => {
   const { isLoading, data, refetch } = useQuery({
     queryKey: ["data-documents"],
     queryFn: async () => {
-      if (roleUtils.checkRole(USER_ROLES.SUPERADMIN) || roleUtils.checkRole(USER_ROLES.DC)) {
+      if (roleUtils.checkRole(USER_ROLES.SUPERADMIN) || roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR)) {
         return await DocumentsService.getDocumentsList();
-      } else {
+      }
+
+      if (roleUtils.checkRole(USER_ROLES.ORIGINATOR)) {
         return await DocumentsService.getDocumentsByDepartmentList(user!.departmentId);
       }
     },
@@ -29,12 +36,18 @@ const DocumentsManagementPage: React.FC = () => {
     selectedData: undefined,
   });
 
+  const [informationModal, setInformationModal] = React.useState<DocumentInformationModal>({ show: false, selectedDataId: undefined });
+
   const handleFormModal = (data: FormModal) => {
     setFormModal(data);
   };
 
-  const handleViewNotices = (documentData: any) => {
-    console.log(documentData);
+  const handleViewDocument = (id: number) => {
+    setInformationModal({ show: true, selectedDataId: id });
+  };
+
+  const handleCloseViewDocument = () => {
+    setInformationModal({ show: false, selectedDataId: undefined });
   };
 
   const handleArchive = (id: number) => {
@@ -85,7 +98,7 @@ const DocumentsManagementPage: React.FC = () => {
       cell: (row: any) => {
         return (
           <div className="flex flex-row gap-6">
-            <button className="font-medium" onClick={() => handleViewNotices(row)}>
+            <button className="font-medium" onClick={() => handleViewDocument(row.id)}>
               View Information
             </button>
             <button className="text-red-700 font-medium" onClick={() => handleArchive(row.id)}>
@@ -106,6 +119,8 @@ const DocumentsManagementPage: React.FC = () => {
         refetch={refetch}
         handleClose={() => handleFormModal({ show: false, selectedData: undefined })}
       />
+
+      <DocumentInformationModal show={informationModal.show} dataId={informationModal.selectedDataId} handleClose={handleCloseViewDocument} />
 
       <PageHeader
         title="Documents Management"

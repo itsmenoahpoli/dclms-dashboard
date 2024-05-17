@@ -88,11 +88,6 @@ export const UserRolesManageModal: React.FC = () => {
       <Modal show={show} onClose={handleClose}>
         <Modal.Header>Account Roles</Modal.Header>
         <Modal.Body>
-          <div className="flex justify-end mb-3">
-            <button className="h-[35px] px-3 rounded bg-primary text-white text-sm" onClick={handleOpen}>
-              Add Role
-            </button>
-          </div>
           <div className="bg-slate-50 rounded border border-gray-300 p-3 my-3">
             <form onSubmit={handleSubmitForm}>
               <p className="font-medium">Role Details Form</p>

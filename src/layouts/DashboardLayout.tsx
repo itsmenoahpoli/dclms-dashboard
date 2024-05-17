@@ -10,13 +10,18 @@ const ICON_SIZE = 20;
 
 export const DashboardLayout: React.FC = () => {
   const { pathname } = useLocation();
-  const { IS_AUTHENTICATED, CLEAR_AUTH_DATA } = useAuthStore();
+  const { IS_AUTHENTICATED, CLEAR_AUTH_DATA, user } = useAuthStore();
 
   React.useLayoutEffect(() => {
     if (!IS_AUTHENTICATED()) {
       window.location.href = "/auth/login";
     }
   }, [IS_AUTHENTICATED]);
+
+  const getUserRole = () => {
+    // @ts-ignore
+    return user!.userRole?.name.toUpperCase().replaceAll("-", " ");
+  };
 
   const isSidebarLinkActive = (linkUrl: string) => {
     return linkUrl == pathname;
@@ -74,6 +79,10 @@ export const DashboardLayout: React.FC = () => {
           <img src={BRAND_LOGO} alt="brand-logo" className="h-auto w-2/4" />
           <h1 className="text-white font-bold">Document Control Log Management System</h1>
         </div>
+
+        <p className="text-xs text-white my-3 mx-5">
+          Logged-in as <span className="font-bold">{getUserRole()}</span>
+        </p>
 
         <div className="flex flex-col mt-10">
           {links
