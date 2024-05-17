@@ -1,9 +1,10 @@
 import React from "react";
 
 type Props = {
-  //
+  documentNotices?: any[];
 };
 
 export const DocumentNoticesList: React.FC<Props> = (props) => {
-  return <div>Document Notices List</div>;
+  console.log(props);
+  return <div className="px-5">{props.documentNotices?.length ? "" : "No data available"}</div>;
 };
