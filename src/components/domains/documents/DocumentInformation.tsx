@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "flowbite-react";
 import { FiLink } from "react-icons/fi";
 
 type Props = {
