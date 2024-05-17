@@ -16,7 +16,7 @@ const DocumentsManagementPage: React.FC = () => {
   const { isLoading, data, refetch } = useQuery({
     queryKey: ["data-documents"],
     queryFn: async () => {
-      if (roleUtils.checkRole(USER_ROLES.SUPERADMIN)) {
+      if (roleUtils.checkRole(USER_ROLES.SUPERADMIN) || roleUtils.checkRole(USER_ROLES.DC)) {
         return await DocumentsService.getDocumentsList();
       } else {
         return await DocumentsService.getDocumentsByDepartmentList(user!.departmentId);
@@ -86,7 +86,7 @@ const DocumentsManagementPage: React.FC = () => {
         return (
           <div className="flex flex-row gap-6">
             <button className="font-medium" onClick={() => handleViewNotices(row)}>
-              View Requests
+              View Information
             </button>
             <button className="text-red-700 font-medium" onClick={() => handleArchive(row.id)}>
               Archive
