@@ -58,7 +58,7 @@ const DashboardHomePage: React.FC = () => {
               </div>
             </div>
           </Card>
-          {roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR) ? (
+          {roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR) || roleUtils.checkRole(USER_ROLES.SUPERADMIN) ? (
             <Card className="w-full shadow-none">
               <div className="flex flex-row gap-4">
                 <div className="w-full">
