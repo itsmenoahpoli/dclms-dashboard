@@ -5,10 +5,48 @@ export const UsersService = {
   getUserRolesList: async function () {
     return await http
       .get("/user-roles")
-      .then((response) => response.data)
+      .then((response) => {
+        if (response.data) {
+          return response.data.filter((role: any) => role.name !== "superadmin");
+        }
+      })
       .catch((error) => {
         console.log(error);
         toast.error("Failed to get user roles list");
+      });
+  },
+
+  createUserRole: async function (roleData: any) {
+    return await http
+      .post("/user-roles", roleData)
+      .then((response) => {
+        toast.success("Role successfully created");
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response?.status === 400) {
+          toast.error("Role already exist");
+        } else {
+          toast.error("Failed to add role");
+        }
+      });
+  },
+
+  updateUserRole: async function (id: number, roleData: any) {
+    return await http
+      .patch("/user-roles/" + id, roleData)
+      .then((response) => {
+        toast.success("Role successfully created");
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response?.status === 400) {
+          toast.error("Role already exist");
+        } else {
+          toast.error("Failed to update role");
+        }
       });
   },
 
