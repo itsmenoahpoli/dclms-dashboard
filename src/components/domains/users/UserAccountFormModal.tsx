@@ -87,6 +87,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
         // @ts-ignore
         if (key === "userRole") setValue(key, props.data.userRole.id);
         if (key === "email") setValue(key, props.data.email.toLowerCase().replaceAll(" ", "-"));
+        if (key === "email") setValue(key, props.data.username.toLowerCase());
         else setValue(key, value);
       }
     }
