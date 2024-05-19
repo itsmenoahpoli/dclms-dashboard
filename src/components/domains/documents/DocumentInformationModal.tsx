@@ -14,12 +14,12 @@ type Props = {
 };
 
 export const DocumentInformationModal: React.FC<Props> = (props) => {
-  const IS_NOT_ORIGINATOR = roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR);
-
   const [documentInformation, setDocumentInformation] = React.useState<any>(null);
   const [noticeForm, setNoticeForm] = React.useState<any>({
     show: false,
   });
+
+  const IS_NOT_ORIGINATOR = roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR);
 
   const checkApprovalStatus = () => {
     const { documentNotices } = documentInformation;
@@ -54,7 +54,10 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
       {documentInformation ? (
         <DocumentNoticeFormModal
           show={noticeForm.show}
+          documentId={documentInformation.id}
           documentExternalUrl={documentInformation.externalUrl}
+          sourceDocument={documentInformation.sourceDocument}
+          fetchDocumentNotices={fetchData}
           handleClose={() => handleNoticeForm(false)}
         />
       ) : null}
