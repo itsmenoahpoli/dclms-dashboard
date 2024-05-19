@@ -1,7 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
-import { PageHeader } from "@/components/shared";
+import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { UserAccountFormModal, UserRolesManageModal } from "@/components/domains/users";
 import { UsersService } from "@/services";
 import { useDialog } from "@/hooks";
@@ -116,7 +116,7 @@ const UsersManagementPage: React.FC = () => {
       </PageHeader>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
-        {isLoading ? "fetching data " : <DataTable columns={tableColumns} data={data} persistTableHead />}
+        {isLoading ? <LoadingIndicator /> : <DataTable columns={tableColumns} data={data} persistTableHead />}
       </div>
     </div>
   );

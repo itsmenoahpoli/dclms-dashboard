@@ -5,7 +5,7 @@ import { Badge } from "flowbite-react";
 import { useAuthStore } from "@/stores";
 import { roleUtils } from "@/utils";
 import { USER_ROLES } from "@/constants";
-import { PageHeader } from "@/components/shared";
+import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { DocumentFormModal, DocumentInformationModal } from "@/components/domains/documents";
 import { DocumentsService } from "@/services";
 import { type FormModal } from "@/types/shared";
@@ -68,7 +68,9 @@ const DocumentsManagementPage: React.FC = () => {
     {
       name: "Series Number",
       key: "seriesNumber",
-      selector: (row: any) => row.seriesNumber,
+      selector: (row: any) => {
+        return <Badge color="blue">{row.seriesNumber}</Badge>;
+      },
     },
     {
       name: "Department",
@@ -76,16 +78,16 @@ const DocumentsManagementPage: React.FC = () => {
       selector: (row: any) => row.department?.name,
     },
     {
+      name: "Originator",
+      key: "originator",
+      selector: (row: any) => row.originator?.name,
+    },
+    {
       name: "Status",
       key: "status",
       selector: (row: any) => {
         return <Badge color="yellow">{row.status.toUpperCase()}</Badge>;
       },
-    },
-    {
-      name: "Originator",
-      key: "originator",
-      selector: (row: any) => row.originator?.name,
     },
     {
       name: "Effectivity Date",
@@ -99,7 +101,7 @@ const DocumentsManagementPage: React.FC = () => {
         return (
           <div className="flex flex-row gap-6">
             <button className="font-medium" onClick={() => handleViewDocument(row.id)}>
-              View Information
+              View Document
             </button>
             <button className="text-red-700 font-medium" onClick={() => handleArchive(row.id)}>
               Archive
@@ -137,7 +139,7 @@ const DocumentsManagementPage: React.FC = () => {
       </PageHeader>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
-        {isLoading ? "Fetching" : <DataTable columns={tableColumns} data={data} persistTableHead />}
+        {isLoading ? <LoadingIndicator /> : <DataTable columns={tableColumns} data={data} persistTableHead pagination />}
       </div>
     </div>
   );
