@@ -50,7 +50,9 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
       </Modal.Body>
       <Modal.Footer className="flex justify-end">
         <Button color="success">Submit Notice</Button>
-        <Button color="light">Close</Button>
+        <Button color="light" onClick={props.handleClose}>
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
   );
