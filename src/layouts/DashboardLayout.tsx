@@ -19,8 +19,10 @@ export const DashboardLayout: React.FC = () => {
   }, [IS_AUTHENTICATED]);
 
   const getUserRole = () => {
-    // @ts-ignore
-    return user!.userRole?.name.toUpperCase().replaceAll("-", " ");
+    if (user) {
+      // @ts-ignore
+      return user.userRole?.name.toUpperCase().replaceAll("-", " ");
+    }
   };
 
   const isSidebarLinkActive = (linkUrl: string) => {
@@ -105,16 +107,18 @@ export const DashboardLayout: React.FC = () => {
           <div>
             <h2>Holy Angel University</h2>
           </div>
-          <div className="flex flex-row justify-end items-center gap-2">
-            {headerLinks.map((link, idx) => (
-              <button
-                onClick={link.onClick}
-                key={`header-link-${link.label}`}
-                className={`text-sm hover:underline ${idx === 1 ? "text-red-500" : ""}`}
-              >
-                {link.label}
-              </button>
-            ))}
+          <div className="flex flex-col justify-between">
+            <div className="flex flex-row justify-end items-center gap-2">
+              {headerLinks.map((link, idx) => (
+                <button
+                  onClick={link.onClick}
+                  key={`header-link-${link.label}`}
+                  className={`text-sm hover:underline ${idx === 1 ? "text-red-500" : ""}`}
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
