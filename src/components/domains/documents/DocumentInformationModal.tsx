@@ -66,10 +66,10 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
             <LoadingIndicator />
           ) : (
             <Tabs>
-              <Tabs.Item title="General Data">
+              <Tabs.Item title="General Data" active>
                 <DocumentInformation documentInformation={documentInformation} />
               </Tabs.Item>
-              <Tabs.Item title="Document Notices (from DC/QMR)" active>
+              <Tabs.Item title="Document Notices (from DC/QMR)">
                 <DocumentNoticesList documentNotices={documentInformation.documentNotices} sourceDocumentType={documentInformation.sourceDocument} />
               </Tabs.Item>
             </Tabs>
