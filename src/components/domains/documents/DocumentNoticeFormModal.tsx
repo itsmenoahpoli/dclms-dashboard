@@ -14,7 +14,7 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
       <Modal.Body>
         <form className="flex flex-col gap-3 text-sm">
           <p>
-            Document Reference:{" "}
+            Document Reference: &nbsp;
             <a href="#" className="text-blue-700 underline">
               {props.documentExternalUrl}
             </a>
@@ -37,10 +37,10 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col gap-1">
+          {/* <div className="w-full flex flex-col gap-1">
             <p>Effectivity Date</p>
             <input type="date" />
-          </div>
+          </div> */}
 
           <div className="w-full flex flex-col gap-1">
             <p>Details of Modification</p>

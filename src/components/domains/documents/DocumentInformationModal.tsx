@@ -21,6 +21,16 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     show: false,
   });
 
+  const checkApprovalStatus = () => {
+    const { documentNotices } = documentInformation;
+
+    if (!documentNotices.length) {
+      return false;
+    }
+
+    return documentNotices.filter((notice: any) => notice.approvalDate === null).length > 0 ? true : false;
+  };
+
   const fetchData = React.useCallback(async () => {
     await DocumentsService.getDocument(props.dataId!).then((data) => setDocumentInformation(data));
   }, [props.dataId]);
@@ -74,8 +84,12 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
               </Button>
 
               <div className="flex flex-row gap-2">
-                <Button color="green">Approve</Button>
-                <Button color="red">Decline</Button>
+                {documentInformation && checkApprovalStatus() ? (
+                  <>
+                    <Button color="green">Approve</Button>
+                    <Button color="red">Decline</Button>
+                  </>
+                ) : null}
               </div>
             </div>
           ) : null}
