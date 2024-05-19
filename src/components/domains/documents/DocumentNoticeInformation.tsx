@@ -1,5 +1,7 @@
 import React from "react";
 import { Badge, Button } from "flowbite-react";
+import { roleUtils } from "@/utils";
+import { USER_ROLES } from "@/constants";
 
 type Props = {
   showActionButtons?: boolean;
@@ -9,6 +11,8 @@ type Props = {
 
 export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
   const { id, revisionNumber, details, nature } = props.data;
+
+  const IS_NOT_ORIGINATOR = roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR);
 
   const handleApproveNotice = (noticeId: number) => {
     console.log(noticeId);
@@ -52,7 +56,7 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
         </div>
       </div>
 
-      {props.showActionButtons ? (
+      {IS_NOT_ORIGINATOR && props.showActionButtons ? (
         <Button size="xs" color="success" onClick={() => handleApproveNotice(id)}>
           Approve Notice
         </Button>

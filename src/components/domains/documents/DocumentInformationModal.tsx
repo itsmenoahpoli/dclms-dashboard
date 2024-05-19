@@ -87,7 +87,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
               </Button>
 
               <div className="flex flex-row gap-2">
-                {documentInformation && checkApprovalStatus() ? (
+                {IS_NOT_ORIGINATOR && documentInformation && checkApprovalStatus() ? (
                   <>
                     <Button color="green">Approve</Button>
                     <Button color="red">Decline</Button>
