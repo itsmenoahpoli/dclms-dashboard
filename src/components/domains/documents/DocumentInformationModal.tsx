@@ -70,7 +70,9 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
           ) : (
             <Tabs>
               <Tabs.Item title="General Data" active>
-                <DocumentInformation documentInformation={documentInformation} />
+                <div className="pl-5">
+                  <DocumentInformation documentInformation={documentInformation} />
+                </div>
               </Tabs.Item>
               <Tabs.Item title="Document Notices (from DC/QMR)">
                 <DocumentNoticesList documentNotices={documentInformation.documentNotices} sourceDocumentType={documentInformation.sourceDocument} />
