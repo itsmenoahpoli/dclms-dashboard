@@ -2,7 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
-import { UserAccountFormModal, UserRolesManageModal } from "@/components/domains/users";
+import { UserAccountFormModal } from "@/components/domains/users";
 import { UsersService } from "@/services";
 import { useDialog } from "@/hooks";
 import type { FormModal } from "@/types/shared";
@@ -109,7 +109,7 @@ const UsersManagementPage: React.FC = () => {
             Add User
           </button>
           <div className="flex max-md:flex-row gap-4">
-            <UserRolesManageModal />
+            {/* <UserRolesManageModal /> */}
             <button className="h-[35px] w-full px-3 rounded bg-white text-black border border-gray-500 text-sm">Departments</button>
           </div>
         </div>
