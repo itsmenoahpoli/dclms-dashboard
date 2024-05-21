@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { FiHome, FiFileText, FiArchive, FiUsers } from "react-icons/fi";
 import { useAuthStore } from "@/stores";
@@ -10,6 +11,7 @@ const ICON_SIZE = 20;
 
 export const DashboardLayout: React.FC = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { IS_AUTHENTICATED, CLEAR_AUTH_DATA, user } = useAuthStore();
 
   React.useLayoutEffect(() => {
@@ -64,7 +66,7 @@ export const DashboardLayout: React.FC = () => {
   const headerLinks = [
     {
       label: "My Account",
-      onClick: () => console.log("my account"),
+      onClick: () => navigate("/dashboard/my-account"),
     },
     {
       label: "Log Out",
@@ -108,7 +110,7 @@ export const DashboardLayout: React.FC = () => {
             <h2>Holy Angel University</h2>
           </div>
           <div className="flex flex-col justify-between">
-            <div className="flex flex-row justify-end items-center gap-2">
+            <div className="flex flex-row justify-end items-center gap-5">
               {headerLinks.map((link, idx) => (
                 <button
                   onClick={link.onClick}

@@ -45,6 +45,11 @@ const DocumentArchivesManagementPage = LoadComponent(React.lazy(() => import("@/
  */
 const UsersManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/users/UsersManagementPage")));
 
+/**
+ * My Profile
+ */
+const MyProfilePage = LoadComponent(React.lazy(() => import("@/views/dashboard/MyAccountPage")));
+
 export const appRoutes = createBrowserRouter([
   {
     path: "*",
@@ -75,8 +80,16 @@ export const appRoutes = createBrowserRouter([
         element: DocumentArchivesManagementPage,
       },
       {
+        path: "/dashboard/document-archives",
+        element: DocumentArchivesManagementPage,
+      },
+      {
         path: "/dashboard/users-management",
         element: UsersManagementPage,
+      },
+      {
+        path: "/dashboard/my-account",
+        element: MyProfilePage,
       },
     ],
   },

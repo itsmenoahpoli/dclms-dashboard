@@ -7,6 +7,7 @@ type AuthData = { authToken: string; user: User };
 export type AuthStore = {
   authToken?: string;
   user?: User;
+  SET_AUTH_USER: (user: AuthData["user"]) => void;
   SET_AUTH_DATA: (data: AuthData) => void;
   GET_AUTH_DATA: () => AuthData;
   CLEAR_AUTH_DATA: () => void;
@@ -18,6 +19,11 @@ export const useAuthStore = create<AuthStore>()(
     (set, get) => ({
       authToken: undefined,
       user: undefined,
+      SET_AUTH_USER: (user: AuthData["user"]) => {
+        return set({
+          user: user,
+        });
+      },
       SET_AUTH_DATA: (data: AuthData) => {
         return set({
           authToken: data.authToken,

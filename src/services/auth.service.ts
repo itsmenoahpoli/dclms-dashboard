@@ -36,4 +36,35 @@ export const AuthService = {
 
     window.location.href = "/auth/login";
   },
+
+  updateProfile: async function (profileId: number, profileData: any) {
+    return await http
+      .patch(`/accounts/${profileId}/profile`, profileData)
+      .then((response) => {
+        const { SET_AUTH_USER } = useAuthStore.getState();
+
+        SET_AUTH_USER(response.data);
+        toast.success("Profile updated");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to update profile information");
+      });
+  },
+
+  updatePassword: async function (profileId: number, profilePassword: any) {
+    return await http
+      .patch(`/accounts/${profileId}/password`, profilePassword)
+      .then((response) => {
+        toast.success("Profile updated");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to update profile password");
+      });
+  },
 };

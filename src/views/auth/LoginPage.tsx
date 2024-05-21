@@ -1,6 +1,6 @@
 import React from "react";
 import { AuthLayout } from "@/layouts";
-import { LoginForm } from "@/components/domains";
+import { LoginForm } from "@/components/domains/auth";
 
 const LoginPage: React.FC = () => {
   return (
