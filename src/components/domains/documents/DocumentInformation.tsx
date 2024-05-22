@@ -1,13 +1,13 @@
 import React from "react";
+import { Badge } from "flowbite-react";
 import { FiLink } from "react-icons/fi";
+import { datesUtils } from "@/utils";
 
 type Props = {
   documentInformation: any;
 };
 
 export const DocumentInformation: React.FC<Props> = (props) => {
-  console.log(props);
-
   const getRevisionNumber = () => {
     const notices = props.documentInformation.documentNotices;
 
@@ -16,7 +16,7 @@ export const DocumentInformation: React.FC<Props> = (props) => {
         console.log(notices[0].revisionNumber);
       }
 
-      console.log(notices[notices.length - 1].revisionNumber);
+      return notices[notices.length - 1].revisionNumber;
     }
 
     return 0;
@@ -30,7 +30,9 @@ export const DocumentInformation: React.FC<Props> = (props) => {
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Type:</div>
-        <div className="text-left text-gray-500">{props.documentInformation.sourceDocument}</div>
+        <div className="text-left text-gray-500">
+          <Badge color="green">{props.documentInformation.sourceDocument}</Badge>
+        </div>
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Department:</div>
@@ -60,7 +62,7 @@ export const DocumentInformation: React.FC<Props> = (props) => {
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Date:</div>
-        <div className="text-left text-gray-500">{props.documentInformation.createdAt}</div>
+        <div className="text-left text-gray-500">{datesUtils.formatDate(props.documentInformation.createdAt, "MMM D, YYYY")}</div>
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Approved by:</div>
