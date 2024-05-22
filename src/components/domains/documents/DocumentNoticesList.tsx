@@ -14,7 +14,12 @@ export const DocumentNoticesList: React.FC<Props> = (props) => {
   return (
     <div className="flex flex-col gap-3 px-5">
       {props.documentNotices?.map((notice, index) => (
-        <DocumentNoticeInformation data={notice} sourceDocumentType={props.sourceDocumentType} showActionButtons={index !== 0} />
+        <DocumentNoticeInformation
+          key={`doc-notice-${notice.id}`}
+          data={notice}
+          sourceDocumentType={props.sourceDocumentType}
+          showActionButtons={index !== 0}
+        />
       ))}
     </div>
   );
