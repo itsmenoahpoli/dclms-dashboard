@@ -5,6 +5,10 @@ import { useAuthStore } from "@/stores";
 import type { Credentials } from "@/types/auth";
 
 export const AuthService = {
+  requestOtp: async function (formData: { identifier: string }, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    console.log({ formData, setLoading });
+  },
+
   authenticateCredentials: async function (credentials: Credentials, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
     return await http
       .post("/auth/login", credentials)

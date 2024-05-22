@@ -13,7 +13,7 @@ const LoadComponent = (Component: React.ComponentType) => {
 /**
  * Layouts
  */
-import { DashboardLayout } from "@/layouts";
+import { DashboardLayout, AuthLayout } from "@/layouts";
 
 /**
  * System Pages
@@ -24,6 +24,7 @@ const Error404Page = LoadComponent(React.lazy(() => import("@/views/system/Error
  * Auth Pages
  */
 const LoginPage = LoadComponent(React.lazy(() => import("@/views/auth/LoginPage")));
+const RequestOtpPage = LoadComponent(React.lazy(() => import("@/views/auth/RequestOtpPage")));
 
 /**
  * Dashboard Pages
@@ -60,8 +61,18 @@ export const appRoutes = createBrowserRouter([
     element: <Navigate to="/dashboard" />,
   },
   {
-    path: "/auth/login",
-    element: LoginPage,
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/auth/login",
+        element: LoginPage,
+      },
+      {
+        path: "/auth/request-otp",
+        element: RequestOtpPage,
+      },
+    ],
   },
   {
     path: "/dashboard",

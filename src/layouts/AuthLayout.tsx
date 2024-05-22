@@ -1,12 +1,8 @@
 import React from "react";
-import type { LayoutProps } from "@/types/layouts";
+import { Outlet } from "react-router-dom";
 import BRAND_LOGO from "@/assets/images/brand-logo.png";
 
-type Props = {
-  //
-} & LayoutProps;
-
-export const AuthLayout: React.FC<Props> = (props) => {
+export const AuthLayout: React.FC = () => {
   return (
     <div className="auth-layout h-screen w-screen bg-slate-100 flex justify-center pt-[5%]">
       <div className="w-[450px] max-sm:!w-[90%] flex flex-col items-center gap-2">
@@ -21,7 +17,9 @@ export const AuthLayout: React.FC<Props> = (props) => {
             and compliance
           </p>
 
-          <div className="bg-slate-50 border-t-2 border-gray-200 p-8 mt-8">{props.children}</div>
+          <div className="bg-slate-50 border-t-2 border-gray-200 p-8 mt-8">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>
