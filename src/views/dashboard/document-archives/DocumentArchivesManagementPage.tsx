@@ -1,4 +1,5 @@
 import React from "react";
+import DataTable from "react-data-table-component";
 import { PageHeader } from "@/components/shared";
 
 const DocumentArchivesManagementPage: React.FC = () => {
@@ -10,7 +11,9 @@ const DocumentArchivesManagementPage: React.FC = () => {
         breadcrumbs={["Documents Archives"]}
       />
 
-      <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100"></div>
+      <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
+        <DataTable columns={[]} data={[]} />
+      </div>
     </div>
   );
 };

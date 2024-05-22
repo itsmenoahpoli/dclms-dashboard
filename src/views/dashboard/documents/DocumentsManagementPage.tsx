@@ -139,7 +139,13 @@ const DocumentsManagementPage: React.FC = () => {
       </PageHeader>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
-        {isLoading ? <LoadingIndicator /> : <DataTable columns={tableColumns} data={data} persistTableHead pagination />}
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : (
+          <div style={{ zoom: 0.9 }}>
+            <DataTable columns={tableColumns} data={data} persistTableHead pagination />
+          </div>
+        )}
       </div>
     </div>
   );
