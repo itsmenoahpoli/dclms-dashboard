@@ -3,11 +3,11 @@ import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
 import { useAuthStore } from "@/stores";
-import { roleUtils } from "@/utils";
 import { USER_ROLES } from "@/constants";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { DocumentFormModal, DocumentInformationModal } from "@/components/domains/documents";
 import { DocumentsService } from "@/services";
+import { roleUtils, datesUtils } from "@/utils";
 import { type FormModal } from "@/types/shared";
 
 type DocumentInformationModal = {
@@ -58,16 +58,19 @@ const DocumentsManagementPage: React.FC = () => {
     {
       name: "Document Name",
       key: "name",
+      sortable: true,
       selector: (row: any) => row.name,
     },
     {
       name: "Source Document",
       key: "sourceDocument",
+      sortable: true,
       selector: (row: any) => row.sourceDocument,
     },
     {
       name: "Series Number",
       key: "seriesNumber",
+      sortable: true,
       selector: (row: any) => {
         return <Badge color="blue">{row.seriesNumber}</Badge>;
       },
@@ -75,24 +78,28 @@ const DocumentsManagementPage: React.FC = () => {
     {
       name: "Department",
       key: "department",
+      sortable: true,
       selector: (row: any) => row.department?.name,
-    },
-    {
-      name: "Originator",
-      key: "originator",
-      selector: (row: any) => row.originator?.name,
     },
     {
       name: "Status",
       key: "status",
+      sortable: true,
       selector: (row: any) => {
         return <Badge color="yellow">{row.status.toUpperCase()}</Badge>;
       },
     },
     {
-      name: "Effectivity Date",
-      key: "effectivityDate",
-      selector: (row: any) => row.effectivityDate || "-",
+      name: "Date Created",
+      key: "createdAt",
+      sortable: true,
+      selector: (row: any) => datesUtils.formatDate(row.createdAt),
+    },
+    {
+      name: "Last Updated",
+      key: "updatedAt",
+      sortable: true,
+      selector: (row: any) => datesUtils.formatDate(row.updatedAt),
     },
     {
       name: "Actions",
@@ -137,6 +144,10 @@ const DocumentsManagementPage: React.FC = () => {
           </div>
         ) : null}
       </PageHeader>
+
+      <div className="p-5">
+        <div className="flex flex-row gap-3"></div>
+      </div>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
         {isLoading ? (

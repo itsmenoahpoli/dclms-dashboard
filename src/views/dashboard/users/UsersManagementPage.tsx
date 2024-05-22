@@ -50,23 +50,28 @@ const UsersManagementPage: React.FC = () => {
   const tableColumns = [
     {
       name: "Full Name",
+      sortable: true,
       selector: (row: any) => row.name,
     },
     {
       name: "E-mail",
+      sortable: true,
       selector: (row: any) => row.email,
     },
     {
       name: "Username",
       width: "300px",
+      sortable: true,
       selector: (row: any) => row.username,
     },
     {
       name: "Department",
+      sortable: true,
       selector: (row: any) => row.department?.name || "Unassigned",
     },
     {
       name: "Last login",
+      sortable: true,
       selector: (row: any) => row.lastSignin || "--",
     },
     {
