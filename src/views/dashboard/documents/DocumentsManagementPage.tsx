@@ -2,6 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
+import { FiEye, FiTrash2 } from "react-icons/fi";
 import { useAuthStore } from "@/stores";
 import { USER_ROLES } from "@/constants";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
@@ -107,11 +108,11 @@ const DocumentsManagementPage: React.FC = () => {
       cell: (row: any) => {
         return (
           <div className="flex flex-row gap-6">
-            <button className="font-medium" onClick={() => handleViewDocument(row.id)}>
-              View Document
+            <button className="font-medium" title="View Details" onClick={() => handleViewDocument(row.id)}>
+              <FiEye size={18} />
             </button>
-            <button className="text-red-700 font-medium" onClick={() => handleArchive(row.id)}>
-              Archive
+            <button className="text-red-700 font-medium" title="Move to archives" onClick={() => handleArchive(row.id)}>
+              <FiTrash2 size={18} />
             </button>
           </div>
         );

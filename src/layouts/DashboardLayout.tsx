@@ -1,11 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import { Squash as Hamburger } from "hamburger-react";
 import { FiHome, FiFileText, FiArchive, FiUsers } from "react-icons/fi";
 import { useAuthStore } from "@/stores";
 import { roleUtils } from "@/utils";
 import { USER_ROLES } from "@/constants";
 import BRAND_LOGO from "@/assets/images/brand-logo.png";
+import BRAND_SUBLOGO from "@/assets/images/brand-sublogo.png";
 
 const ICON_SIZE = 20;
 
@@ -78,7 +80,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <div className="h-screen w-screen flex flex-row">
-      <div className="h-screen !min-w-[350px] bg-primary pt-8 max-md:hidden">
+      <div className="h-screen !min-w-[300px] !w-[300px] bg-primary pt-8 max-lg:hidden">
         <div className="h-[280px] flex flex-col gap-5 justify-center items-center text-center border-b-2 border-red-900 px-3 pb-10">
           <img src={BRAND_LOGO} alt="brand-logo" className="h-auto w-2/4" />
           <h1 className="text-white font-bold">Document Control Log Management System</h1>
@@ -106,8 +108,12 @@ export const DashboardLayout: React.FC = () => {
       </div>
       <div className="h-screen w-full bg-slate-50">
         <div className="w-full h-[60px] flex flex-row justify-between items-center bg-white shadow px-5">
-          <div>
-            <h2>Holy Angel University</h2>
+          <div className="flex flex-row gap-2 items-center">
+            <div className="hidden max-lg:block">
+              <Hamburger size={18} />
+            </div>
+            <h2 className="font-medium block max-lg:hidden">Holy Angel University</h2>
+            <img src={BRAND_SUBLOGO} alt="brand-sublogo" className="h-[50px] w-auto hidden max-lg:block" />
           </div>
           <div className="flex flex-col justify-between">
             <div className="flex flex-row justify-end items-center gap-5">

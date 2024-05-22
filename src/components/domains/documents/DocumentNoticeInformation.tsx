@@ -58,7 +58,7 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
 
       {IS_NOT_ORIGINATOR && props.showActionButtons ? (
         <Button size="xs" color="success" onClick={() => handleApproveNotice(id)}>
-          Approve Notice
+          Approve
         </Button>
       ) : null}
     </div>
