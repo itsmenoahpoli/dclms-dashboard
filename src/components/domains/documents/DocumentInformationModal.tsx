@@ -32,6 +32,20 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     return documentNotices.filter((notice: any) => notice.approvalDate === null).length > 0 ? true : false;
   };
 
+  const checkDisableAddNotice = () => {
+    if (documentInformation?.documentNotices.length) {
+      const notices = documentInformation.documentNotices;
+
+      if (notices.length === 1) {
+        return notices[0].approvedBy === null;
+      }
+
+      return notices[notices.length - 1].approvedBy === null;
+    }
+
+    return false;
+  };
+
   const fetchData = React.useCallback(async () => {
     await DocumentsService.getDocument(props.dataId!).then((data) => setDocumentInformation(data));
   }, [props.dataId]);
@@ -85,10 +99,12 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
         <Modal.Footer>
           <div className="w-full flex flex-row justify-between gap-3">
             <div className="flex flex-row gap-2">
-              <Button color="blue" className="flex flex-row items-center" onClick={() => handleNoticeForm(true)}>
-                <FiPlusCircle size={22} />
-                &nbsp; Add Revision Notice
-              </Button>
+              {documentInformation?.documentNotices ? (
+                <Button color="blue" className="flex flex-row items-center" disabled={checkDisableAddNotice()} onClick={() => handleNoticeForm(true)}>
+                  <FiPlusCircle size={22} />
+                  &nbsp; Add Revision Notice
+                </Button>
+              ) : null}
 
               <Button color="failure" className="flex flex-row items-center" onClick={() => handleNoticeForm(true, true)}>
                 <FiTrash2 size={22} />
