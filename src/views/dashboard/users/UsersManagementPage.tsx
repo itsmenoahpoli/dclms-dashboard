@@ -11,7 +11,7 @@ import type { FormModal } from "@/types/shared";
 const UsersManagementPage: React.FC = () => {
   const { showConfirm, closeConfirm, DialogComponent } = useDialog();
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ["data-users-list"],
     queryFn: async () => await UsersService.getUsersList(),
   });
@@ -114,11 +114,14 @@ const UsersManagementPage: React.FC = () => {
           <button className="h-[35px] max-md:!w-full px-3 rounded bg-primary text-white text-sm" onClick={() => handleFormModal({ show: true })}>
             Add User
           </button>
+          <button className="h-[35px] max-md:!w-full px-3 rounded bg-gray-200 border border-gray-300 text-gray-800 text-sm" onClick={() => refetch()}>
+            Refresh list
+          </button>
         </div>
       </PageHeader>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
-        {isLoading ? <LoadingIndicator /> : <DataTable columns={tableColumns} data={data} persistTableHead pagination />}
+        {isFetching ? <LoadingIndicator /> : <DataTable columns={tableColumns} data={data} persistTableHead pagination />}
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ type DocumentInformationModal = {
 const DocumentsManagementPage: React.FC = () => {
   const { user } = useAuthStore();
 
-  const { isLoading, data, refetch } = useQuery({
+  const { isFetching, data, refetch } = useQuery({
     queryKey: ["data-documents"],
     queryFn: async () => {
       if (roleUtils.checkRole(USER_ROLES.SUPERADMIN) || roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR)) {
@@ -134,13 +134,16 @@ const DocumentsManagementPage: React.FC = () => {
         subtitle="View and manage documents submitted by all departments that are pending, for revision, for approval"
         breadcrumbs={["Documents Management"]}
       >
-        {roleUtils.checkRole("originator-per-document") ? (
-          <div className="flex justify-end">
+        <div className="flex flex-row gap-3 justify-end">
+          {roleUtils.checkRole("originator-per-document") ? (
             <button className="h-[35px] max-md:!w-full px-3 rounded bg-primary text-white text-sm" onClick={() => handleFormModal({ show: true })}>
               Create Document
             </button>
-          </div>
-        ) : null}
+          ) : null}
+          <button className="h-[35px] max-md:!w-full px-3 rounded bg-gray-200 border border-gray-300 text-gray-800 text-sm" onClick={() => refetch()}>
+            Refresh list
+          </button>
+        </div>
       </PageHeader>
 
       <div className="p-5">
@@ -161,7 +164,7 @@ const DocumentsManagementPage: React.FC = () => {
       </div>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
-        {isLoading ? (
+        {isFetching ? (
           <LoadingIndicator />
         ) : (
           <div style={{ zoom: 0.9 }}>

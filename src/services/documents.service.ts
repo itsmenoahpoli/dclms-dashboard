@@ -22,6 +22,16 @@ export const DocumentsService = {
       });
   },
 
+  getArchivedDocumentsByDepartmentList: async function (departmentId: number) {
+    return await http
+      .get("/documents/archived/department/" + departmentId)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to get archived document list");
+      });
+  },
+
   getDocument: async function (id: number) {
     return await http
       .get("/documents/" + id)

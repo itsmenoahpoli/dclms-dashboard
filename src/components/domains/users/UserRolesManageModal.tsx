@@ -6,7 +6,7 @@ import { Modal, Button } from "flowbite-react";
 import { UsersService } from "@/services";
 
 export const UserRolesManageModal: React.FC = () => {
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ["data-user-roles"],
     queryFn: async () => await UsersService.getUserRolesList(),
   });
@@ -105,7 +105,7 @@ export const UserRolesManageModal: React.FC = () => {
               </div>
             </form>
           </div>
-          {isLoading ? "Fetching" : <DataTable columns={tableColumns} data={data} persistTableHead />}
+          {isFetching ? "Fetching" : <DataTable columns={tableColumns} data={data} persistTableHead />}
         </Modal.Body>
       </Modal>
     </>

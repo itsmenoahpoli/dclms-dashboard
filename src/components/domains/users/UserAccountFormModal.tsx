@@ -18,12 +18,12 @@ type Props = {
 export const UserAccountFormModal: React.FC<Props> = (props) => {
   const { handleSubmit, register, getValues, setValue, watch, reset } = useForm();
 
-  const { data: departments, isLoading: departmentsLoading } = useQuery({
+  const { data: departments, isFetching: departmentsLoading } = useQuery({
     queryKey: ["data-departments"],
     queryFn: async () => await DepartmentsService.getDepartmentsList(),
   });
 
-  const { data: userRoles, isLoading: userRolesLoading } = useQuery({
+  const { data: userRoles, isFetching: userRolesLoading } = useQuery({
     queryKey: ["data-user-roles"],
     queryFn: async () => await UsersService.getUserRolesList(),
   });
