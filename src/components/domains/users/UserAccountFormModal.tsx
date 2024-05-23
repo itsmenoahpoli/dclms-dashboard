@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const UserAccountFormModal: React.FC<Props> = (props) => {
-  const { handleSubmit, register, getValues, setValue, watch } = useForm();
+  const { handleSubmit, register, getValues, setValue, watch, reset } = useForm();
 
   const { data: departments, isLoading: departmentsLoading } = useQuery({
     queryKey: ["data-departments"],
@@ -57,6 +57,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     setLoading(true);
 
     if (props.formType === "add") {
+      reset();
       await UsersService.createUser(formData);
     } else {
       delete formData.password;
@@ -87,7 +88,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
         // @ts-ignore
         if (key === "userRole") setValue(key, props.data.userRole.id);
         if (key === "email") setValue(key, props.data.email.toLowerCase().replaceAll(" ", "-"));
-        if (key === "email") setValue(key, props.data.username.toLowerCase());
+        if (key === "username") setValue(key, props.data.username.toLowerCase());
         else setValue(key, value);
       }
     }
