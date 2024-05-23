@@ -147,18 +147,10 @@ const DocumentsManagementPage: React.FC = () => {
         <div className="flex flex-row gap-3"></div>
       </div>
 
-      {/* <div className="w-1/2 flex flex-row gap-2 p-5">
+      <div className="w-1/2 flex flex-row gap-2 p-5">
         <div className="w-full flex flex-col gap-1">
           <p className="text-xs text-gray-500">Search</p>
           <input className="h-[35px]" placeholder="By name, series number, department" />
-        </div>
-        <div className="w-full flex flex-col gap-1">
-          <p className="text-xs text-gray-500">Filter by status</p>
-          <select className="h-[35px]">
-            <option value=""></option>
-            <option value="approved">Approved</option>
-            <option value="pending">Pending</option>
-          </select>
         </div>
         <div className="w-full flex flex-col gap-1">
           <p className="text-xs text-gray-500">Filter by source document</p>
@@ -166,7 +158,7 @@ const DocumentsManagementPage: React.FC = () => {
             <option value=""></option>
           </select>
         </div>
-      </div> */}
+      </div>
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
         {isLoading ? (

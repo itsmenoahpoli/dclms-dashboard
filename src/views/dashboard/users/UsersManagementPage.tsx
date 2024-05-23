@@ -43,7 +43,7 @@ const UsersManagementPage: React.FC = () => {
         closeConfirm();
       },
       onCancel: () => {
-        console.log("hide");
+        closeConfirm();
       },
     });
   };

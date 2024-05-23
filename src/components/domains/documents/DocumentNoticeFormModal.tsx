@@ -52,7 +52,7 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
         <form className="flex flex-col gap-3 text-sm" onSubmit={handleNoticeSubmit}>
           <p>
             Document Reference: &nbsp;
-            <a href="#" className="text-blue-700 underline">
+            <a href={props.documentExternalUrl} className="text-blue-700 underline" target="_blank">
               {props.documentExternalUrl}
             </a>
           </p>

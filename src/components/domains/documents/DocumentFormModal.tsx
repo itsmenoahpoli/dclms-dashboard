@@ -46,7 +46,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   });
 
   React.useEffect(() => {
-    setValue("nature", "Addition");
+    setValue("nature", "Creation");
   }, [setValue]);
 
   return (

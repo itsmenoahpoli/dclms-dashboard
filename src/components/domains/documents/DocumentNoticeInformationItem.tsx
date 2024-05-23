@@ -9,7 +9,7 @@ type Props = {
   sourceDocumentType: string;
 };
 
-export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
+export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
   const { id, revisionNumber, details, nature } = props.data;
 
   const IS_NOT_ORIGINATOR = roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR);
@@ -22,6 +22,10 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
     switch (nature) {
       case "revision":
         return "yellow";
+
+      case "creation":
+      case "addition":
+        return "green";
 
       case "archive":
       case "deletion":
@@ -64,7 +68,11 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
           <div>
             <p className="font-medium">Approval Status</p>
             <p className="text-sm text-gray-700 font-bold">
-              {props.approvedBy ? <span className="text-green-800">APPROVED</span> : <span className="text-yellow-400">PENDING</span>}
+              {props.approvalDate !== null ? (
+                <span className="text-green-800">√ &nbsp; APPROVED</span>
+              ) : (
+                <span className="text-yellow-400">x &nbsp;PENDING</span>
+              )}
             </p>
           </div>
         </div>

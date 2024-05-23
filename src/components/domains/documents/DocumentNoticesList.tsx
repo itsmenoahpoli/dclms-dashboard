@@ -1,5 +1,5 @@
 import React from "react";
-import { DocumentNoticeInformation } from "@/components/domains/documents";
+import { DocumentNoticeInformationItem } from "@/components/domains/documents";
 
 type Props = {
   sourceDocumentType: string;
@@ -14,7 +14,7 @@ export const DocumentNoticesList: React.FC<Props> = (props) => {
   return (
     <div className="flex flex-col gap-3 px-5">
       {props.documentNotices?.map((notice, index) => (
-        <DocumentNoticeInformation
+        <DocumentNoticeInformationItem
           key={`doc-notice-${notice.id}`}
           data={notice}
           sourceDocumentType={props.sourceDocumentType}

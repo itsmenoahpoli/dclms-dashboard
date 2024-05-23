@@ -32,6 +32,20 @@ export const DocumentsService = {
       });
   },
 
+  updateDocument: async function (id: number, formData: any) {
+    return await http
+      .patch("/documents/" + id, formData)
+      .then((response) => {
+        toast.success("Document created");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to update document information");
+      });
+  },
+
   createDocument: async function (documentData: any) {
     return await http
       .post("/documents", documentData)

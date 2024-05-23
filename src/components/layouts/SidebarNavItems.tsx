@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiHome, FiFileText, FiArchive, FiUsers, FiLayers } from "react-icons/fi";
-import { roleUtils } from "@/utils";
-import { USER_ROLES } from "@/constants";
+import { IS_SUPERADMIN } from "@/constants";
 
 const ICON_SIZE = 20;
 
@@ -31,13 +30,13 @@ export const SidebarNavItems: React.FC = () => {
       icon: <FiUsers size={ICON_SIZE} />,
       label: "Users Management",
       url: "/dashboard/users-management",
-      show: roleUtils.checkRole(USER_ROLES.SUPERADMIN),
+      show: IS_SUPERADMIN,
     },
     {
       icon: <FiLayers size={ICON_SIZE} />,
       label: "Departments Management",
       url: "/dashboard/departments-management",
-      show: roleUtils.checkRole(USER_ROLES.SUPERADMIN),
+      show: IS_SUPERADMIN,
     },
   ];
 
@@ -53,7 +52,7 @@ export const SidebarNavItems: React.FC = () => {
           <Link
             to={link.url}
             key={`sidebar-link-${link.label}`}
-            className={`w-full flex flex-row items-center gap-3 text-sm text-gray-300 font-medium rounded py-5 px-5 hover:text-white hover:bg-red-950 ${
+            className={`w-full flex flex-row items-center gap-3 text-xs text-gray-300 font-medium rounded py-5 px-5 hover:text-white hover:bg-red-950 ${
               isSidebarLinkActive(link.url) ? "bg-red-950" : ""
             }`}
           >
