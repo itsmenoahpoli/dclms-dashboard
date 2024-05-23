@@ -1,21 +1,24 @@
 import React from "react";
-import { Badge, Button } from "flowbite-react";
-import { roleUtils } from "@/utils";
-import { USER_ROLES } from "@/constants";
+import { Badge, Button, Spinner } from "flowbite-react";
+import { DocumentNoticesService } from "@/services";
+import { IS_DC } from "@/constants";
+import { datesUtils } from "@/utils";
 
 type Props = {
   showActionButtons?: boolean;
-  data?: any;
   sourceDocumentType: string;
+  data?: any;
+  refetch: () => void;
 };
 
 export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
-  const { id, revisionNumber, details, nature } = props.data;
+  const { id, revisionNumber, details, nature, requestedBy, approvalDate } = props.data;
 
-  const IS_NOT_ORIGINATOR = roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR);
+  const [approveLoading, setApproveLoading] = React.useState<boolean>(false);
 
-  const handleApproveNotice = (noticeId: number) => {
-    console.log(noticeId);
+  const handleApproveNotice = async (noticeId: number) => {
+    setApproveLoading(true);
+    await DocumentNoticesService.approveDocumentNotice(noticeId, setApproveLoading).finally(() => props.refetch());
   };
 
   const getBadgeColor = (nature: string) => {
@@ -40,9 +43,15 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
     <div className="w-full bg-slate-100 rounded-lg p-3">
       <div className="flex flex-row justify-between">
         <small className="text-sm font-medium">REVISION {revisionNumber}</small>
-        <Badge color={getBadgeColor(nature)} className="border border-gray-600">
-          {nature.toUpperCase()}
-        </Badge>
+
+        <div className="flex flex-row gap-2">
+          <Badge color="blue" className="border border-gray-600">
+            Requested by &mdash; {requestedBy}
+          </Badge>
+          <Badge color={getBadgeColor(nature)} className="border border-gray-600">
+            {nature.toUpperCase()}
+          </Badge>
+        </div>
       </div>
       <hr className="my-3" />
 
@@ -62,26 +71,27 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
         <div className="flex flex-col gap-4 text-sm w-1/4">
           <div>
             <p className="font-medium">Effectivity Date</p>
-            <p className="text-sm text-gray-700">{props.effectivityDate || "--"}</p>
+            <p className="text-sm text-gray-700">{"--"}</p>
+          </div>
+
+          <div>
+            <p className="font-medium">Approval Date</p>
+            <p className="text-sm text-gray-700 font-bold">{datesUtils.formatDate(approvalDate) || "--"}</p>
           </div>
 
           <div>
             <p className="font-medium">Approval Status</p>
             <p className="text-sm text-gray-700 font-bold">
-              {props.approvalDate !== null ? (
-                <span className="text-green-800">√ &nbsp; APPROVED</span>
-              ) : (
-                <span className="text-yellow-400">x &nbsp;PENDING</span>
-              )}
+              {!approvalDate ? <span className="text-yellow-400">x &nbsp;PENDING</span> : <span className="text-green-800">√ &nbsp; APPROVED</span>}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        {IS_NOT_ORIGINATOR && props.showActionButtons ? (
-          <Button size="xs" color="success" onClick={() => handleApproveNotice(id)}>
-            Approve
+      <div className="w-1/3 flex flex-col gap-2">
+        {IS_DC && !approvalDate && props.showActionButtons ? (
+          <Button size="xs" color="success" className="w-1/2" disabled={approveLoading} onClick={() => handleApproveNotice(id)}>
+            {approveLoading ? <Spinner /> : "Approve"}
           </Button>
         ) : null}
       </div>

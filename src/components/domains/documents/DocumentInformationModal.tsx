@@ -5,7 +5,7 @@ import { DocumentInformation, DocumentNoticesList, DocumentNoticeFormModal, Docu
 import { LoadingIndicator } from "@/components/shared";
 import { DocumentsService } from "@/services";
 import { useDialog } from "@/hooks";
-import { IS_NOT_ORIGINATOR, IS_ORIGINATOR } from "@/constants";
+import { IS_ORIGINATOR } from "@/constants";
 
 type Props = {
   show: boolean;
@@ -26,14 +26,20 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
   });
 
   const checkApprovalStatus = () => {
-    const { documentNotices } = documentInformation;
+    if (documentInformation) {
+      const { documentNotices } = documentInformation;
 
-    if (!documentNotices.length) {
-      return false;
+      if (!documentNotices.length) {
+        return false;
+      }
+
+      return documentNotices.filter((notice: any) => !notice.approvalDate).length === 0;
     }
 
-    return documentNotices.filter((notice: any) => notice.approvalDate === null).length > 0 ? true : false;
+    return false;
   };
+
+  console.log(checkApprovalStatus());
 
   const checkDisableAddNotice = () => {
     if (documentInformation?.documentNotices.length) {
@@ -135,7 +141,11 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
                 </div>
               </Tabs.Item>
               <Tabs.Item title="Document Notices (from DC/QMR)">
-                <DocumentNoticesList documentNotices={documentInformation.documentNotices} sourceDocumentType={documentInformation.sourceDocument} />
+                <DocumentNoticesList
+                  documentNotices={documentInformation.documentNotices}
+                  sourceDocumentType={documentInformation.sourceDocument}
+                  refetch={fetchData}
+                />
               </Tabs.Item>
             </Tabs>
           )}
@@ -175,10 +185,10 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
                   &nbsp; Update Information
                 </Button>
               ) : null}
-              {IS_NOT_ORIGINATOR && documentInformation && checkApprovalStatus() ? (
+              {documentInformation && checkApprovalStatus() ? (
                 <>
-                  <Button color="green">Approve</Button>
-                  <Button color="red">Decline</Button>
+                  <Button color="success">Approve Document</Button>
+                  <Button color="red">Decline Document</Button>
                 </>
               ) : null}
             </div>

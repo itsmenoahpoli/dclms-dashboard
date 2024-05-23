@@ -26,4 +26,19 @@ export const DocumentNoticesService = {
       })
       .finally(() => setLoading(false));
   },
+
+  approveDocumentNotice: async function (id: number, setApproveLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    return await http
+      .post("/document-notices/approve/" + id)
+      .then((response) => {
+        toast.success("Successfully approved document notice");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to approve document notice");
+      })
+      .finally(() => setApproveLoading(false));
+  },
 };
