@@ -111,13 +111,6 @@ const DocumentsManagementPage: React.FC = () => {
             >
               <FiEye size={18} /> Manage
             </button>
-            {/* <button
-              className="text-red-700 border border-red-600 hover:bg-red-600 hover:text-white font-medium rounded p-2"
-              title="Move to archives"
-              onClick={() => handleArchive(row.id)}
-            >
-              Move to Archive
-            </button> */}
           </div>
         );
       },
@@ -153,6 +146,27 @@ const DocumentsManagementPage: React.FC = () => {
       <div className="p-5">
         <div className="flex flex-row gap-3"></div>
       </div>
+
+      {/* <div className="w-1/2 flex flex-row gap-2 p-5">
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-xs text-gray-500">Search</p>
+          <input className="h-[35px]" placeholder="By name, series number, department" />
+        </div>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-xs text-gray-500">Filter by status</p>
+          <select className="h-[35px]">
+            <option value=""></option>
+            <option value="approved">Approved</option>
+            <option value="pending">Pending</option>
+          </select>
+        </div>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-xs text-gray-500">Filter by source document</p>
+          <select className="h-[35px]">
+            <option value=""></option>
+          </select>
+        </div>
+      </div> */}
 
       <div className="w-full min-h-[300px] bg-white border-t-2 border-gray-100">
         {isLoading ? (
