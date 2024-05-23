@@ -12,6 +12,11 @@ type Props = {
   handleClose: () => void;
 };
 
+const modificationNatureTypes = ["Revision", "Addition", "Deletion"].map((type) => ({
+  label: type,
+  value: type.toLowerCase(),
+}));
+
 const sourceDocumentTypes = ["Quality Management", "Procedures Manual", "Forms Manual", "Records Management Manual", "Document Information"].map(
   (type) => ({
     label: type,
@@ -21,7 +26,7 @@ const sourceDocumentTypes = ["Quality Management", "Procedures Manual", "Forms M
 
 export const DocumentFormModal: React.FC<Props> = (props) => {
   const { user } = useAuthStore();
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register, setValue, reset } = useForm();
 
   const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -44,6 +49,10 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
       console.log("update");
     }
   });
+
+  React.useEffect(() => {
+    setValue("nature", "addition");
+  }, [setValue]);
 
   return (
     <Modal show={props.show} onClose={props.handleClose}>
@@ -70,6 +79,23 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="w-full flex flex-col gap-1">
+            <p>Nature of Modification</p>
+            <select {...register("nature")} required>
+              <option value="">--</option>
+              {modificationNatureTypes.map((type) => (
+                <option value={type.value} key={type.value}>
+                  {type.value === "deletion" ? "Archive/Deletion" : type.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">Remarks</p>
+            <textarea rows={7} {...register("remars")} required />
           </div>
 
           <div className="flex flex-row justify-end gap-3">

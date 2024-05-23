@@ -60,7 +60,7 @@ export const HeaderNav: React.FC = () => {
       </div>
 
       {showNav ? (
-        <div className="w-screen bg-primary text-white fixed bottom-0 pt-[80px]" style={{ height: "calc(100vh - 60px)" }}>
+        <div className="w-screen bg-primary text-white fixed bottom-0 pt-[80px]" style={{ height: "calc(100vh - 60px)", zIndex: 9999 }}>
           <SidebarNavItems />
         </div>
       ) : null}

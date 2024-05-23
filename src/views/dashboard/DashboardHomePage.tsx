@@ -58,6 +58,28 @@ const DashboardHomePage: React.FC = () => {
               </div>
             </div>
           </Card>
+          <Card className="w-full shadow-none">
+            <div className="flex flex-row gap-4">
+              <div className="w-full">
+                <h1 className="text-md font-medium text-gray-black">SUBMITTED FORMS</h1>
+                <h1 className="text-3xl text-black mt-4">{data?.totalFormsSubmittedCount}</h1>
+              </div>
+              <div className="w-full flex justify-end">
+                <FcFolder size={ICON_SIZE} />
+              </div>
+            </div>
+          </Card>
+          <Card className="w-full shadow-none">
+            <div className="flex flex-row gap-4">
+              <div className="w-full">
+                <h1 className="text-md font-medium text-gray-black">SUBMITTED FORMS</h1>
+                <h1 className="text-3xl text-black mt-4">{data?.totalFormsSubmittedCount}</h1>
+              </div>
+              <div className="w-full flex justify-end">
+                <FcFolder size={ICON_SIZE} />
+              </div>
+            </div>
+          </Card>
           {roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR) || roleUtils.checkRole(USER_ROLES.SUPERADMIN) ? (
             <Card className="w-full shadow-none">
               <div className="flex flex-row gap-4">
