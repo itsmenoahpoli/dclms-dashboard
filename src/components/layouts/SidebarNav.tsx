@@ -1,7 +1,6 @@
 import React from "react";
 import { useAuthStore } from "@/stores";
 import { SidebarNavItems } from "@/components/layouts/SidebarNavItems";
-
 import BRAND_LOGO from "@/assets/images/brand-logo.png";
 
 export const SidebarNav: React.FC = () => {

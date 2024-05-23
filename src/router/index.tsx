@@ -42,9 +42,14 @@ const DocumentsManagementPage = LoadComponent(React.lazy(() => import("@/views/d
 const DocumentArchivesManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/document-archives/DocumentArchivesManagementPage")));
 
 /**
- * Users Management
+ * Users Management Pages
  */
 const UsersManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/users/UsersManagementPage")));
+
+/**
+ * Departments Management Pages
+ */
+const DepartmentsManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/departments/DepartmentsManagementPage")));
 
 /**
  * My Profile
@@ -97,6 +102,11 @@ export const appRoutes = createBrowserRouter([
       {
         path: "/dashboard/users-management",
         element: UsersManagementPage,
+      },
+
+      {
+        path: "/dashboard/departments-management",
+        element: DepartmentsManagementPage,
       },
       {
         path: "/dashboard/my-account",

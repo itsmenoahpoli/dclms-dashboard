@@ -1,13 +1,13 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
-import { Badge } from "flowbite-react";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { DepartmentsService } from "@/services";
+import { datesUtils } from "@/utils";
 // import { useDialog } from "@/hooks";
 // import type { FormModal } from "@/types/shared";
 
-export const DepartmentsManagementPage: React.FC = () => {
+const DepartmentsManagementPage: React.FC = () => {
   // const { showConfirm, closeConfirm, DialogComponent } = useDialog();
 
   const { data, isFetching } = useQuery({
@@ -25,30 +25,29 @@ export const DepartmentsManagementPage: React.FC = () => {
 
   const tableColumns = [
     {
-      name: "Full Name",
+      name: "Name",
       sortable: true,
       selector: (row: any) => row.name,
     },
     {
-      name: "E-mail",
+      name: "Acronym",
       sortable: true,
-      selector: (row: any) => row.email,
+      selector: (row: any) => row.title,
     },
     {
-      name: "Username",
-      width: "300px",
+      name: "Series Number Prefix",
       sortable: true,
-      selector: (row: any) => row.username,
+      selector: (row: any) => row.seriesPrefix,
     },
     {
-      name: "Department",
+      name: "Date Created",
       sortable: true,
-      selector: (row: any) => row.department?.name || <Badge color="red">Unassigned</Badge>,
+      selector: (row: any) => datesUtils.formatDate(row.createdAt),
     },
     {
-      name: "Last login",
+      name: "Last Updated",
       sortable: true,
-      selector: (row: any) => row.lastSignin || "--",
+      selector: (row: any) => (row.createdAt === row.updatedAt ? "--" : datesUtils.formatDate(row.createdAt)),
     },
     {
       name: "Actions",
@@ -73,9 +72,9 @@ export const DepartmentsManagementPage: React.FC = () => {
       {/* {DialogComponent} */}
 
       <PageHeader
-        title="Users Management"
-        subtitle="View and manage user accounts and user roles for all departments"
-        breadcrumbs={["Users Management"]}
+        title="Departments Management"
+        subtitle="View and manage departments and departments information"
+        breadcrumbs={["Departments Management"]}
       >
         <div className="flex flex-row max-md:flex-col justify-end gap-3 w-full">
           <button className="h-[35px] max-md:!w-full px-3 rounded bg-primary text-white text-sm">Add Department</button>
@@ -92,3 +91,5 @@ export const DepartmentsManagementPage: React.FC = () => {
     </div>
   );
 };
+
+export default DepartmentsManagementPage;
