@@ -2,7 +2,7 @@ import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
-import { FiEye, FiTrash2 } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 import { useAuthStore } from "@/stores";
 import { USER_ROLES } from "@/constants";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
@@ -49,10 +49,6 @@ const DocumentsManagementPage: React.FC = () => {
 
   const handleCloseViewDocument = () => {
     setInformationModal({ show: false, selectedDataId: undefined });
-  };
-
-  const handleArchive = (id: number) => {
-    console.log(id);
   };
 
   const tableColumns = [
