@@ -15,7 +15,7 @@ export const DashboardLayout: React.FC = () => {
   return (
     <div className="h-screen w-screen flex flex-row">
       <SidebarNav />
-      <div className="h-screen w-full bg-slate-50">
+      <div className="h-screen w-full bg-slate-50 overflow-x-auto">
         <HeaderNav />
 
         <div className="py-5">

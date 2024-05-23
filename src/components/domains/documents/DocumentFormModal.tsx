@@ -12,11 +12,6 @@ type Props = {
   handleClose: () => void;
 };
 
-const modificationNatureTypes = ["Revision", "Addition", "Deletion"].map((type) => ({
-  label: type,
-  value: type.toLowerCase(),
-}));
-
 const sourceDocumentTypes = ["Quality Management", "Procedures Manual", "Forms Manual", "Records Management Manual", "Document Information"].map(
   (type) => ({
     label: type,
@@ -51,7 +46,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   });
 
   React.useEffect(() => {
-    setValue("nature", "addition");
+    setValue("nature", "Addition");
   }, [setValue]);
 
   return (
@@ -83,14 +78,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
 
           <div className="w-full flex flex-col gap-1">
             <p>Nature of Modification</p>
-            <select {...register("nature")} required>
-              <option value="">--</option>
-              {modificationNatureTypes.map((type) => (
-                <option value={type.value} key={type.value}>
-                  {type.value === "deletion" ? "Archive/Deletion" : type.label}
-                </option>
-              ))}
-            </select>
+            <input className="bg-gray-200" {...register("nature")} readOnly required />
           </div>
 
           <div className="flex flex-col gap-2">
