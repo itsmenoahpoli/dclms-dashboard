@@ -64,13 +64,7 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
           <div>
             <p className="font-medium">Approval Status</p>
             <p className="text-sm text-gray-700 font-bold">
-              {nature === "addition" ? (
-                <span className="text-green-800">PASSED</span>
-              ) : props.approvedBy ? (
-                <span className="text-green-800">APPROVED</span>
-              ) : (
-                <span className="text-yellow-400">PENDING</span>
-              )}
+              {props.approvedBy ? <span className="text-green-800">APPROVED</span> : <span className="text-yellow-400">PENDING</span>}
             </p>
           </div>
         </div>

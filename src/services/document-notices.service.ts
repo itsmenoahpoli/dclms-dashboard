@@ -12,7 +12,7 @@ export const DocumentNoticesService = {
       });
   },
 
-  createDocumentNotice: async function (data: any) {
+  createDocumentNotice: async function (data: any, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
     return await http
       .post("/document-notices", { ...data, nature: data.nature.toLowerCase() })
       .then((response) => {
@@ -23,6 +23,7 @@ export const DocumentNoticesService = {
       .catch((error) => {
         console.log(error);
         toast.error("Failed to create document notice");
-      });
+      })
+      .finally(() => setLoading(false));
   },
 };

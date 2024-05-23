@@ -108,12 +108,20 @@ const DocumentsManagementPage: React.FC = () => {
       cell: (row: any) => {
         return (
           <div className="flex flex-row gap-6">
-            <button className="font-medium" title="View Details" onClick={() => handleViewDocument(row.id)}>
-              <FiEye size={18} />
+            <button
+              className="font-medium flex flex-row gap-2 items-center hover:text-blue-500"
+              title="View Details"
+              onClick={() => handleViewDocument(row.id)}
+            >
+              <FiEye size={18} /> Manage
             </button>
-            <button className="text-red-700 font-medium" title="Move to archives" onClick={() => handleArchive(row.id)}>
-              <FiTrash2 size={18} />
-            </button>
+            {/* <button
+              className="text-red-700 border border-red-600 hover:bg-red-600 hover:text-white font-medium rounded p-2"
+              title="Move to archives"
+              onClick={() => handleArchive(row.id)}
+            >
+              Move to Archive
+            </button> */}
           </div>
         );
       },

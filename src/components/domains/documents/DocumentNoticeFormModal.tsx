@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Modal, Button } from "flowbite-react";
+import { Modal, Button, Spinner } from "flowbite-react";
 import { DocumentNoticesService } from "@/services";
 
 type Props = {
@@ -29,8 +29,10 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
     },
   });
 
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   const handleNoticeSubmit = handleSubmit(async (formData: any) => {
-    await DocumentNoticesService.createDocumentNotice(formData).finally(() => reset());
+    await DocumentNoticesService.createDocumentNotice(formData, setLoading).finally(() => reset());
     props.fetchDocumentNotices();
     props.handleClose();
   });
@@ -82,7 +84,7 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
 
           <div className="flex flex-row justify-end gap-3 mt-5">
             <Button color="success" type="submit">
-              Submit Notice
+              {loading ? <Spinner /> : "Submit Notice"}
             </Button>
             <Button color="light" onClick={props.handleClose}>
               Close
