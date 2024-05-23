@@ -75,7 +75,7 @@ export const DocumentInformation: React.FC<Props> = (props) => {
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Approved by:</div>
-        <div className="text-left text-gray-500">--</div>
+        <div className="text-left text-gray-500">{props.documentInformation.status === "approved" ? "DOCUMENT CONTROLLER" : "--"}</div>
       </div>
       <div className="flex flex-row gap-5 py-5">
         <div className="w-[180px] text-left">Effectivity Date:</div>

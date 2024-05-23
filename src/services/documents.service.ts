@@ -56,6 +56,36 @@ export const DocumentsService = {
       });
   },
 
+  approveDocument: async function (id: number, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    return await http
+      .post("/documents/approve/" + id)
+      .then((response) => {
+        toast.success("Document approved");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to approve document");
+      })
+      .finally(() => setLoading(false));
+  },
+
+  declineDocument: async function (id: number, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    return await http
+      .post("/documents/decline/" + id)
+      .then((response) => {
+        toast.success("Document approved");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to approve document");
+      })
+      .finally(() => setLoading(false));
+  },
+
   createDocument: async function (documentData: any) {
     return await http
       .post("/documents", documentData)

@@ -24,6 +24,11 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
   const [infoForm, setInfoForm] = React.useState<any>({
     show: false,
   });
+  const [updateStatusLoading, setUpdateStatusLoading] = React.useState<boolean>(false);
+
+  const fetchData = React.useCallback(async () => {
+    await DocumentsService.getDocument(props.dataId!).then((data) => setDocumentInformation(data));
+  }, [props.dataId]);
 
   const checkApprovalStatus = () => {
     if (documentInformation) {
@@ -38,8 +43,6 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
 
     return false;
   };
-
-  console.log(checkApprovalStatus());
 
   const checkDisableAddNotice = () => {
     if (documentInformation?.documentNotices.length) {
@@ -58,8 +61,6 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
   const checkNoticesHasArchiveRequest = () => {
     const notices = documentInformation ? documentInformation.documentNotices : [];
 
-    console.log(notices);
-
     if (notices.length) {
       return notices.filter((notice: any) => notice.nature === "archive").length > 0;
     }
@@ -67,9 +68,15 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     return false;
   };
 
-  const fetchData = React.useCallback(async () => {
-    await DocumentsService.getDocument(props.dataId!).then((data) => setDocumentInformation(data));
-  }, [props.dataId]);
+  const handleUpdateStatus = async (type: "approved" | "declined") => {
+    setUpdateStatusLoading(true);
+
+    if (type === "approved") {
+      return await DocumentsService.approveDocument(documentInformation.id, setUpdateStatusLoading);
+    }
+
+    return await DocumentsService.declineDocument(documentInformation.id, setUpdateStatusLoading);
+  };
 
   const handleNoticeForm = (isOpen: boolean, isDeletion: boolean = false) => {
     if (IS_ORIGINATOR && isDeletion) {
@@ -150,50 +157,56 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
             </Tabs>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <div className="w-full flex flex-row justify-between gap-3">
-            <div className="flex flex-row justify-between gap-2">
-              {documentInformation?.documentNotices ? (
-                <>
-                  <Button
-                    color="blue"
-                    className="flex flex-row items-center"
-                    disabled={checkDisableAddNotice()}
-                    onClick={() => handleNoticeForm(true)}
-                  >
-                    <FiPlusCircle size={22} />
-                    &nbsp; Add Revision Notice
-                  </Button>
+        {documentInformation && documentInformation.status === "pending" ? (
+          <Modal.Footer>
+            <div className="w-full flex flex-row justify-between gap-3">
+              <div className="flex flex-row justify-between gap-2">
+                {documentInformation?.documentNotices ? (
+                  <>
+                    <Button
+                      color="blue"
+                      className="flex flex-row items-center"
+                      disabled={checkDisableAddNotice()}
+                      onClick={() => handleNoticeForm(true)}
+                    >
+                      <FiPlusCircle size={22} />
+                      &nbsp; Add Revision Notice
+                    </Button>
 
-                  <Button
-                    color="failure"
-                    className="flex flex-row items-center"
-                    disabled={checkNoticesHasArchiveRequest()}
-                    onClick={() => handleNoticeForm(true, true)}
-                  >
-                    <FiTrash2 size={22} />
-                    &nbsp; Archive
-                  </Button>
-                </>
-              ) : null}
-            </div>
+                    <Button
+                      color="failure"
+                      className="flex flex-row items-center"
+                      disabled={checkNoticesHasArchiveRequest()}
+                      onClick={() => handleNoticeForm(true, true)}
+                    >
+                      <FiTrash2 size={22} />
+                      &nbsp; Archive
+                    </Button>
+                  </>
+                ) : null}
+              </div>
 
-            <div className="flex flex-row gap-2">
-              {IS_ORIGINATOR ? (
-                <Button color="blue" className="flex flex-row items-center !bg-blue-900" onClick={() => handleInfoForm(true)}>
-                  <FiEdit3 size={22} />
-                  &nbsp; Update Information
-                </Button>
-              ) : null}
-              {documentInformation && checkApprovalStatus() ? (
-                <>
-                  <Button color="success">Approve Document</Button>
-                  <Button color="red">Decline Document</Button>
-                </>
-              ) : null}
+              <div className="flex flex-row gap-2">
+                {IS_ORIGINATOR ? (
+                  <Button color="blue" className="flex flex-row items-center !bg-blue-900" onClick={() => handleInfoForm(true)}>
+                    <FiEdit3 size={22} />
+                    &nbsp; Update Information
+                  </Button>
+                ) : null}
+                {documentInformation && documentInformation.status === "pending" && checkApprovalStatus() ? (
+                  <>
+                    <Button color="success" onClick={() => handleUpdateStatus("approved")} disabled={updateStatusLoading}>
+                      Approve Document
+                    </Button>
+                    <Button color="red" onClick={() => handleUpdateStatus("declined")} disabled={updateStatusLoading}>
+                      Decline Document
+                    </Button>
+                  </>
+                ) : null}
+              </div>
             </div>
-          </div>
-        </Modal.Footer>
+          </Modal.Footer>
+        ) : null}
       </Modal>
     </>
   );
