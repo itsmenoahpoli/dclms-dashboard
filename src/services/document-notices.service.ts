@@ -14,7 +14,7 @@ export const DocumentNoticesService = {
 
   createDocumentNotice: async function (data: any) {
     return await http
-      .post("/document-notices", data)
+      .post("/document-notices", { ...data, nature: data.nature.toLowerCase() })
       .then((response) => {
         toast.success("Successfully create document notice");
 

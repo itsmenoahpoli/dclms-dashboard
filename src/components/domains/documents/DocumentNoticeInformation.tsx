@@ -18,11 +18,25 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
     console.log(noticeId);
   };
 
+  const getBadgeColor = (nature: string) => {
+    switch (nature) {
+      case "revision":
+        return "yellow";
+
+      case "archive":
+      case "deletion":
+        return "failure";
+
+      default:
+        return "blue";
+    }
+  };
+
   return (
     <div className="w-full bg-slate-100 rounded-lg p-3">
       <div className="flex flex-row justify-between">
-        <small className="text-sm font-medium">Revision {revisionNumber}</small>
-        <Badge color="blue" className="border border-blue-600">
+        <small className="text-sm font-medium">REVISION {revisionNumber}</small>
+        <Badge color={getBadgeColor(nature)} className="border border-gray-600">
           {nature.toUpperCase()}
         </Badge>
       </div>
@@ -50,17 +64,25 @@ export const DocumentNoticeInformation: React.FC<Props> = (props: any) => {
           <div>
             <p className="font-medium">Approval Status</p>
             <p className="text-sm text-gray-700 font-bold">
-              {props.approvedBy ? <span className="text-green-800">APPROVED</span> : <span className="text-yellow-400">PENDING</span>}
+              {nature === "addition" ? (
+                <span className="text-green-800">PASSED</span>
+              ) : props.approvedBy ? (
+                <span className="text-green-800">APPROVED</span>
+              ) : (
+                <span className="text-yellow-400">PENDING</span>
+              )}
             </p>
           </div>
         </div>
       </div>
 
-      {IS_NOT_ORIGINATOR && props.showActionButtons ? (
-        <Button size="xs" color="success" onClick={() => handleApproveNotice(id)}>
-          Approve
-        </Button>
-      ) : null}
+      <div className="flex flex-col gap-2">
+        {IS_NOT_ORIGINATOR && props.showActionButtons ? (
+          <Button size="xs" color="success" onClick={() => handleApproveNotice(id)}>
+            Approve
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 };

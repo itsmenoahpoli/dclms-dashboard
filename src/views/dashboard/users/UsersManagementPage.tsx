@@ -1,6 +1,7 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
+import { Badge } from "flowbite-react";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { UserAccountFormModal } from "@/components/domains/users";
 import { UsersService } from "@/services";
@@ -67,7 +68,7 @@ const UsersManagementPage: React.FC = () => {
     {
       name: "Department",
       sortable: true,
-      selector: (row: any) => row.department?.name || "Unassigned",
+      selector: (row: any) => row.department?.name || <Badge color="red">Unassigned</Badge>,
     },
     {
       name: "Last login",
@@ -113,10 +114,6 @@ const UsersManagementPage: React.FC = () => {
           <button className="h-[35px] max-md:!w-full px-3 rounded bg-primary text-white text-sm" onClick={() => handleFormModal({ show: true })}>
             Add User
           </button>
-          <div className="flex max-md:flex-row gap-4">
-            {/* <UserRolesManageModal /> */}
-            <button className="h-[35px] w-full px-3 rounded bg-white text-black border border-gray-500 text-sm">Departments</button>
-          </div>
         </div>
       </PageHeader>
 

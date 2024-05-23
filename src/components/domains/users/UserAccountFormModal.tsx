@@ -41,7 +41,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
         const lastname = name.length > 0 ? name.split(" ")[name.split(" ").length - 1] : name;
         const uid = String(moment().unix()).substring(0, 5);
 
-        const username = `${departmentAcro}-${lastname}-${uid}`;
+        const username = `${departmentAcro}-${lastname}-${uid}`.toLowerCase();
         const password = username.toLowerCase().replaceAll("-", "");
 
         setUsername(username);
@@ -58,6 +58,8 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
     if (props.formType === "add") {
       reset();
+      setValue("username", "");
+      setValue("password", "");
       await UsersService.createUser(formData);
     } else {
       delete formData.password;

@@ -8,6 +8,7 @@ type Props = {
   sourceDocument: string;
   documentId: number;
   show: boolean;
+  isDeletion?: boolean;
   fetchDocumentNotices: () => void;
   handleClose: () => void;
 };
@@ -19,13 +20,8 @@ const sourceDocumentTypes = ["Quality Management", "Procedures Manual", "Forms M
   })
 );
 
-const modificationNatureTypes = ["Revision", "Addition", "Deletion"].map((type) => ({
-  label: type,
-  value: type.toLowerCase(),
-}));
-
 export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
-  const { handleSubmit, register, reset } = useForm({
+  const { handleSubmit, register, reset, setValue } = useForm({
     defaultValues: {
       documentId: +props.documentId,
       details: "",
@@ -38,6 +34,14 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
     props.fetchDocumentNotices();
     props.handleClose();
   });
+
+  React.useEffect(() => {
+    if (props.isDeletion) {
+      setValue("nature", "Archive");
+    } else {
+      setValue("nature", "Revision");
+    }
+  }, [setValue, props.isDeletion]);
 
   return (
     <Modal size="5xl" show={props.show} onClose={props.handleClose}>
@@ -67,14 +71,7 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
             </div>
             <div className="w-full flex flex-col gap-1">
               <p>Nature of Modification</p>
-              <select {...register("nature")} required>
-                <option value="">--</option>
-                {modificationNatureTypes.map((type) => (
-                  <option value={type.value} key={type.value}>
-                    {type.value === "deletion" ? "Archive/Deletion" : type.label}
-                  </option>
-                ))}
-              </select>
+              <input {...register("nature")} readOnly required />
             </div>
           </div>
 

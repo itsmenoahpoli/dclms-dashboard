@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Tabs, Button } from "flowbite-react";
-import { FiPlusCircle } from "react-icons/fi";
+import { FiPlusCircle, FiTrash2 } from "react-icons/fi";
 import { DocumentInformation, DocumentNoticesList, DocumentNoticeFormModal } from "@/components/domains/documents";
 import { LoadingIndicator } from "@/components/shared";
 import { DocumentsService } from "@/services";
@@ -17,6 +17,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
   const [documentInformation, setDocumentInformation] = React.useState<any>(null);
   const [noticeForm, setNoticeForm] = React.useState<any>({
     show: false,
+    isDeletion: false,
   });
 
   const IS_NOT_ORIGINATOR = roleUtils.checkRole(USER_ROLES.DC) || roleUtils.checkRole(USER_ROLES.QMR);
@@ -35,8 +36,8 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     await DocumentsService.getDocument(props.dataId!).then((data) => setDocumentInformation(data));
   }, [props.dataId]);
 
-  const handleNoticeForm = (isOpen: boolean) => {
-    setNoticeForm({ show: isOpen });
+  const handleNoticeForm = (isOpen: boolean, isDeletion: boolean = false) => {
+    setNoticeForm({ show: isOpen, isDeletion });
   };
 
   React.useEffect(() => {
@@ -54,6 +55,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
       {documentInformation ? (
         <DocumentNoticeFormModal
           show={noticeForm.show}
+          isDeletion={noticeForm.isDeletion}
           documentId={documentInformation.id}
           documentExternalUrl={documentInformation.externalUrl}
           sourceDocument={documentInformation.sourceDocument}
@@ -81,23 +83,28 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          {IS_NOT_ORIGINATOR ? (
-            <div className="w-full flex flex-row justify-between gap-3">
+          <div className="w-full flex flex-row justify-between gap-3">
+            <div className="flex flex-row gap-2">
               <Button color="blue" className="flex flex-row items-center" onClick={() => handleNoticeForm(true)}>
                 <FiPlusCircle size={22} />
-                &nbsp; Request Notice
+                &nbsp; Add Revision Notice
               </Button>
 
-              <div className="flex flex-row gap-2">
-                {IS_NOT_ORIGINATOR && documentInformation && checkApprovalStatus() ? (
-                  <>
-                    <Button color="green">Approve</Button>
-                    <Button color="red">Decline</Button>
-                  </>
-                ) : null}
-              </div>
+              <Button color="failure" className="flex flex-row items-center" onClick={() => handleNoticeForm(true, true)}>
+                <FiTrash2 size={22} />
+                &nbsp; Archive
+              </Button>
             </div>
-          ) : null}
+
+            <div className="flex flex-row gap-2">
+              {IS_NOT_ORIGINATOR && documentInformation && checkApprovalStatus() ? (
+                <>
+                  <Button color="green">Approve</Button>
+                  <Button color="red">Decline</Button>
+                </>
+              ) : null}
+            </div>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

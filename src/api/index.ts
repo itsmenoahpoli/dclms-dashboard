@@ -11,7 +11,6 @@ const instance: AxiosInstance = axios.create({
   // baseURL: "https://dclms-backend-nestjs-production.up.railway.app/api/v1",
   // @ts-ignore
   baseURL: baseURLS[import.meta.env.VITE_APP_APIENV],
-  timeout: 5000,
 });
 
 instance.interceptors.request.use(
