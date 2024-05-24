@@ -1,10 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import React from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import { LoadingScreen } from "@/components/shared";
 
 const LoadComponent = (Component: React.ComponentType) => {
   return (
-    <React.Suspense fallback={"Loading ..."}>
+    <React.Suspense fallback={<LoadingScreen />}>
       <Component />
     </React.Suspense>
   );

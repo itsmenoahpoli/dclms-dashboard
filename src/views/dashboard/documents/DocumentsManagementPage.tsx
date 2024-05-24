@@ -59,7 +59,7 @@ const DocumentsManagementPage: React.FC = () => {
       case "approved":
         return "green";
 
-      case "decined":
+      case "declined":
         return "red";
 
       default:

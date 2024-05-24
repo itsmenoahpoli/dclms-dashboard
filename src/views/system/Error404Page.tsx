@@ -8,7 +8,9 @@ const Error404Page: React.FC = () => {
       <img src={BRAND_LOGO} alt="brand-logo" className="h-auto w-[150px]" />
       <h1 className="text-white text-3xl font-bold">PAGE NOT FOUND</h1>
 
-      <Link to="/dashboard">Go back home</Link>
+      <Link to="/dashboard" className="text-sm text-white underline underline-offset-4">
+        Go back home
+      </Link>
     </div>
   );
 };

@@ -173,15 +173,17 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
                       &nbsp; Add Revision Notice
                     </Button>
 
-                    <Button
-                      color="failure"
-                      className="flex flex-row items-center"
-                      disabled={checkNoticesHasArchiveRequest()}
-                      onClick={() => handleNoticeForm(true, true)}
-                    >
-                      <FiTrash2 size={22} />
-                      &nbsp; Archive
-                    </Button>
+                    {IS_ORIGINATOR ? (
+                      <Button
+                        color="failure"
+                        className="flex flex-row items-center"
+                        disabled={checkNoticesHasArchiveRequest()}
+                        onClick={() => handleNoticeForm(true, true)}
+                      >
+                        <FiTrash2 size={22} />
+                        &nbsp; Archive
+                      </Button>
+                    ) : null}
                   </>
                 ) : null}
               </div>
