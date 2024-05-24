@@ -11,4 +11,18 @@ export const DepartmentsService = {
         toast.error("Failed to get departments list");
       });
   },
+
+  deleteDepartment: async function (id: number) {
+    return await http
+      .delete("/departments/" + id)
+      .then((response) => {
+        toast.success("Successfully deleted department");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to delete department");
+      });
+  },
 };

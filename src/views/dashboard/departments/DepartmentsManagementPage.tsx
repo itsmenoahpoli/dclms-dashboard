@@ -19,8 +19,8 @@ const DepartmentsManagementPage: React.FC = () => {
     console.log(data);
   };
 
-  const handleDelete = (id: number) => {
-    console.log(id);
+  const handleDelete = async (id: number) => {
+    await DepartmentsService.deleteDepartment(id);
   };
 
   const tableColumns = [
@@ -58,9 +58,14 @@ const DepartmentsManagementPage: React.FC = () => {
             <button className="font-medium" onClick={() => handleUpdate(row)}>
               Update
             </button>
-            <button className="text-red-700 font-medium" onClick={() => handleDelete(row.id)}>
-              Remove
-            </button>
+
+            {row.users.length || row.documents.length ? (
+              <div className="w-[50px] text-center">--</div>
+            ) : (
+              <button className="text-red-700 font-medium" onClick={() => handleDelete(row.id)}>
+                Remove
+              </button>
+            )}
           </div>
         );
       },
@@ -85,6 +90,10 @@ const DepartmentsManagementPage: React.FC = () => {
         <LoadingIndicator />
       ) : (
         <div style={{ zoom: 0.9 }}>
+          <p className="text-sm text-gray-700 text-right mx-5 my-3">
+            If <span className="text-red-700 font-bold">Remove</span> is hidden, means a user and/or document is assigned to the specific department
+            record
+          </p>
           <DataTable columns={tableColumns} data={data} persistTableHead pagination />
         </div>
       )}
