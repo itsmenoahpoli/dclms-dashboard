@@ -24,18 +24,18 @@ export const SidebarNavItems: React.FC<Props> = (props) => {
       url: "/dashboard/documents?status=pending",
       show: true,
     },
-    {
-      icon: <FiFileText size={ICON_SIZE} />,
-      label: "Documents (In-Progress)",
-      url: "/dashboard/documents?status=in-progress",
-      show: true,
-    },
-    {
-      icon: <FiFileText size={ICON_SIZE} />,
-      label: "Documents (Completed)",
-      url: "/dashboard/documents?status=approved",
-      show: true,
-    },
+    // {
+    //   icon: <FiFileText size={ICON_SIZE} />,
+    //   label: "Documents (In-Progress)",
+    //   url: "/dashboard/documents?status=in-progress",
+    //   show: true,
+    // },
+    // {
+    //   icon: <FiFileText size={ICON_SIZE} />,
+    //   label: "Documents (Completed)",
+    //   url: "/dashboard/documents?status=approved",
+    //   show: true,
+    // },
     {
       icon: <FiArchive size={ICON_SIZE} />,
       label: "Documents (Archived)",
