@@ -36,6 +36,7 @@ const DashboardHomePage = LoadComponent(React.lazy(() => import("@/views/dashboa
  * Documents Pages
  */
 const DocumentsManagementPage = LoadComponent(React.lazy(() => import("@/views/dashboard/documents/DocumentsManagementPage")));
+const DocumentViewInformationPage = LoadComponent(React.lazy(() => import("@/views/dashboard/documents/DocumentViewInformationPage")));
 
 /**
  * Document Archives Pages
@@ -91,6 +92,10 @@ export const appRoutes = createBrowserRouter([
       {
         path: "/dashboard/documents",
         element: DocumentsManagementPage,
+      },
+      {
+        path: "/dashboard/documents/:documentId/manage",
+        element: DocumentViewInformationPage,
       },
       {
         path: "/dashboard/document-archives",

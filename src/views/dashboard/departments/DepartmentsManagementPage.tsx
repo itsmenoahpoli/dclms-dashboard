@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { DepartmentsService } from "@/services";
 import { datesUtils } from "@/utils";
-// import { useDialog } from "@/hooks";
+import { useDialog } from "@/hooks";
 // import type { FormModal } from "@/types/shared";
 
 const DepartmentsManagementPage: React.FC = () => {
-  // const { showConfirm, closeConfirm, DialogComponent } = useDialog();
+  const { showConfirm, closeConfirm, DialogComponent } = useDialog();
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ["data-users-list"],
     queryFn: async () => await DepartmentsService.getDepartmentsList(),
   });
@@ -20,7 +20,19 @@ const DepartmentsManagementPage: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
-    await DepartmentsService.deleteDepartment(id);
+    showConfirm({
+      open: true,
+      title: "Confirm Deletion",
+      description: "Are you sure you want to delete this record?",
+      onConfirm: async () => {
+        await DepartmentsService.deleteDepartment(id);
+        refetch();
+        closeConfirm();
+      },
+      onCancel: () => {
+        closeConfirm();
+      },
+    });
   };
 
   const tableColumns = [
@@ -59,7 +71,7 @@ const DepartmentsManagementPage: React.FC = () => {
               Update
             </button>
 
-            {row.users.length || row.documents.length ? (
+            {row.users?.length || row.documents?.length ? (
               <div className="w-[50px] text-center">--</div>
             ) : (
               <button className="text-red-700 font-medium" onClick={() => handleDelete(row.id)}>
@@ -74,7 +86,7 @@ const DepartmentsManagementPage: React.FC = () => {
 
   return (
     <div>
-      {/* {DialogComponent} */}
+      {DialogComponent}
 
       <PageHeader
         title="Departments Management"
@@ -91,8 +103,8 @@ const DepartmentsManagementPage: React.FC = () => {
       ) : (
         <div style={{ zoom: 0.9 }}>
           <p className="text-sm text-gray-700 text-right mx-5 my-3">
-            If <span className="text-red-700 font-bold">Remove</span> is hidden, means a user and/or document is assigned to the specific department
-            record
+            If <span className="text-red-700 font-bold">Remove</span> button is hidden, means a user(s) and/or document(s) is assigned to the specific
+            department record
           </p>
           <DataTable columns={tableColumns} data={data} persistTableHead pagination />
         </div>

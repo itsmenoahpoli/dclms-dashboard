@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Button, Modal, Spinner } from "flowbite-react";
 import { DepartmentsService, UsersService } from "@/services";
-import { stringsUtils } from "@/utils";
 
 type Props = {
   show: boolean;
@@ -37,11 +36,10 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     (name: string, department: string) => {
       if (name && department) {
         const matchedDepartment = departments.find((dept: any) => dept.id === +department);
-        const departmentAcro = stringsUtils.makeArcronyms(matchedDepartment.name);
         const lastname = name.length > 0 ? name.split(" ")[name.split(" ").length - 1] : name;
         const uid = String(moment().unix()).substring(0, 5);
 
-        const username = `${departmentAcro}-${lastname}-${uid}`.toLowerCase();
+        const username = `${matchedDepartment.title}-${lastname}-${uid}`.toLowerCase();
         const password = username.toLowerCase().replaceAll("-", "");
 
         setUsername(username);

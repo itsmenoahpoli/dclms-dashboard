@@ -12,6 +12,20 @@ export const DocumentsService = {
       });
   },
 
+  getDocumentsListByStatus: async function (status: string | null) {
+    if (!status) {
+      return await this.getDocumentsList();
+    }
+
+    return await http
+      .get("/documents/status/" + status)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to get document list");
+      });
+  },
+
   getDocumentsByDepartmentList: async function (departmentId: number) {
     return await http
       .get("/documents/department/" + departmentId)

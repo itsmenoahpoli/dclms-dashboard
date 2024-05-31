@@ -77,8 +77,13 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="w-full flex flex-col gap-1">
-            <p>Nature of Modification</p>
+            <p className="text-sm">Nature of Modification</p>
             <input className="bg-gray-200" {...register("nature")} readOnly required />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">Details of Modification</p>
+            <textarea rows={7} {...register("modification_detail")} required />
           </div>
 
           <div className="flex flex-col gap-2">

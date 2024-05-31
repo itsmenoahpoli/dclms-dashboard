@@ -1,5 +1,6 @@
 import React from "react";
 import DataTable from "react-data-table-component";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
 import { FiEye } from "react-icons/fi";
@@ -17,13 +18,14 @@ type DocumentInformationModal = {
 };
 
 const DocumentsManagementPage: React.FC = () => {
+  const navigate = useNavigate();
   const { user } = useAuthStore();
 
   const { isFetching, data, refetch } = useQuery({
     queryKey: ["data-documents"],
     queryFn: async () => {
       if (IS_SUPERADMIN || IS_DC || IS_QMR) {
-        return await DocumentsService.getDocumentsList();
+        return await DocumentsService.getDocumentsListByStatus(searchParams.get("status"));
       }
 
       if (IS_ORIGINATOR) {
@@ -31,6 +33,8 @@ const DocumentsManagementPage: React.FC = () => {
       }
     },
   });
+
+  const [searchParams] = useSearchParams();
 
   const [formModal, setFormModal] = React.useState<FormModal>({
     show: false,
@@ -44,7 +48,7 @@ const DocumentsManagementPage: React.FC = () => {
   };
 
   const handleViewDocument = (id: number) => {
-    setInformationModal({ show: true, selectedDataId: id });
+    navigate(`/dashboard/documents/${id}/manage`);
   };
 
   const handleCloseViewDocument = () => {
@@ -60,12 +64,17 @@ const DocumentsManagementPage: React.FC = () => {
         return "green";
 
       case "declined":
+      case "archived":
         return "red";
 
       default:
         return "blue";
     }
   };
+
+  React.useEffect(() => {
+    refetch();
+  }, [searchParams, refetch]);
 
   const tableColumns = [
     {
@@ -156,17 +165,16 @@ const DocumentsManagementPage: React.FC = () => {
               Create Document
             </button>
           ) : null}
-          <button className="h-[35px] max-md:!w-full px-3 rounded bg-gray-200 border border-gray-300 text-gray-800 text-sm" onClick={() => refetch()}>
+          <button
+            className="h-[35px] max-md:!w-full px-3 rounded bg-green-300 border border-green-400 text-gray-950 text-xs"
+            onClick={() => refetch()}
+          >
             Refresh list
           </button>
         </div>
       </PageHeader>
 
-      <div className="p-5">
-        <div className="flex flex-row gap-3"></div>
-      </div>
-
-      <div className="w-1/2 flex flex-row gap-2 p-5 hidden">
+      <div className="w-1/2 flex flex-row gap-2 p-5">
         <div className="w-full flex flex-col gap-1">
           <p className="text-xs text-gray-500">Search</p>
           <input className="h-[35px]" placeholder="By name, series number, department" />
@@ -184,7 +192,7 @@ const DocumentsManagementPage: React.FC = () => {
           <LoadingIndicator />
         ) : (
           <div style={{ zoom: 0.9 }}>
-            <DataTable columns={tableColumns} data={data} persistTableHead pagination />
+            <DataTable columns={tableColumns} data={data} paginationPerPage={25} persistTableHead pagination />
           </div>
         )}
       </div>
