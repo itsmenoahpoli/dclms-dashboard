@@ -1,6 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import moment from "moment";
+import PasswordStrengthBar from "react-password-strength-bar";
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Button, Modal, Spinner } from "flowbite-react";
@@ -31,6 +32,30 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [passwordStrength, setPasswordStrength] = React.useState<number>(0);
+
+  const generateUniquePassword = (length: number = 16) => {
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-=_+";
+
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      // Get a random index within the charset length
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      // Extract the character at the random index
+      const randomChar = charset[randomIndex];
+      // Add the character to the result string
+      result += randomChar;
+    }
+
+    return result;
+  };
+
+  const handleCreatePassword = React.useCallback(() => {
+    const password = generateUniquePassword();
+
+    setPassword(password);
+    setValue("password", password);
+  }, [setValue]);
 
   const handleCreateUsername = React.useCallback(
     (name: string, department: string) => {
@@ -40,16 +65,18 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
         const uid = String(moment().unix()).substring(0, 5);
 
         const username = `${matchedDepartment.title}-${lastname}-${uid}`.toLowerCase();
-        const password = username.toLowerCase().replaceAll("-", "");
+        handleCreatePassword();
 
         setUsername(username);
         setValue("username", username);
-        setPassword(password);
-        setValue("password", password);
       }
     },
-    [departments, setValue]
+    [departments, setValue, handleCreatePassword]
   );
+
+  const handleSetPasswordStrength = (strength: number) => {
+    setPasswordStrength(strength);
+  };
 
   const handleSubmitForm = handleSubmit(async (formData) => {
     setLoading(true);
@@ -100,17 +127,27 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
       <Modal.Body>
         <form className="flex flex-col gap-5" onSubmit={handleSubmitForm}>
           <div className="flex flex-col gap-2">
-            <p className="text-sm">E-mail</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              E-mail
+            </p>
             <input type="email" {...register("email")} required />
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Full Name</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Full Name
+            </p>
             <input type="text" {...register("name")} required />
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Department</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Department
+            </p>
+
             {departmentsLoading ? (
               "Fetching departments ..."
             ) : (
@@ -126,7 +163,10 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Account Type</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Account Type
+            </p>
             {userRolesLoading ? (
               "Fetching account types ..."
             ) : (
@@ -144,20 +184,30 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Username</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>Username
+            </p>
+
             <input type="text" defaultValue={username} {...register("username")} required />
             <small className="text-gray-500">{"Default format - {department}-{lastname}-{any unique identifier}"}</small>
           </div>
 
           {props.formType === "add" ? (
             <div className="flex flex-col gap-2">
-              <p className="text-sm">Default Password</p>
-              <input type="text" defaultValue={password} {...register("password")} required />
+              <p className="text-sm">
+                <span className="text-red-600 mr-1">*</span>
+                Default Password
+              </p>
+              <input type="text" defaultValue={password} {...register("password")} onChange={(e) => setPassword(e.target.value)} required />
+              <button className="text-sm text-left text-blue-700 underline" type="button" onClick={handleCreatePassword}>
+                Generate new password
+              </button>
+              <PasswordStrengthBar password={password} onChangeScore={handleSetPasswordStrength} />
             </div>
           ) : null}
 
           <div className="flex flex-row justify-end gap-3">
-            <Button color="success" type="submit" disabled={loading}>
+            <Button color="success" type="submit" disabled={loading || passwordStrength < 3}>
               {loading ? <Spinner /> : props.formType === "add" ? "Create Account" : "Update Account"}
             </Button>
             <Button color="light" onClick={props.handleClose}>
