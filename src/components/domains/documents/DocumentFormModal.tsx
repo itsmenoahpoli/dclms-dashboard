@@ -55,17 +55,27 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
       <Modal.Body>
         <form className="flex flex-col gap-5" onSubmit={handleSubmitForm}>
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Name</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Name
+            </p>
             <input {...register("name")} required />
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">External Link/URL</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              External Link/URL
+            </p>
             <input {...register("externalUrl")} required />
+            <p className="text-xs text-gray-600">Make sure the url is public</p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Source Document</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Source Document
+            </p>
             <select {...register("sourceDocument")} required>
               <option value="">--</option>
               {sourceDocumentTypes.map((type) => (
@@ -77,18 +87,24 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="w-full flex flex-col gap-1">
-            <p className="text-sm">Nature of Modification</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Nature of Modification
+            </p>
             <input className="bg-gray-200" {...register("nature")} readOnly required />
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-sm">Details of Modification</p>
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Details of Modification
+            </p>
             <textarea rows={7} {...register("modification_detail")} required />
           </div>
 
           <div className="flex flex-col gap-2">
             <p className="text-sm">Remarks</p>
-            <textarea rows={7} {...register("remars")} required />
+            <textarea rows={7} {...register("remars")} />
           </div>
 
           <div className="flex flex-row justify-end gap-3">

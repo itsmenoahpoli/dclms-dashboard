@@ -50,12 +50,12 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     return result;
   };
 
-  const handleCreatePassword = React.useCallback(() => {
+  const handleCreatePassword = () => {
     const password = generateUniquePassword();
 
     setPassword(password);
     setValue("password", password);
-  }, [setValue]);
+  };
 
   const handleCreateUsername = React.useCallback(
     (name: string, department: string) => {
@@ -63,15 +63,13 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
         const matchedDepartment = departments.find((dept: any) => dept.id === +department);
         const lastname = name.length > 0 ? name.split(" ")[name.split(" ").length - 1] : name;
         const uid = String(moment().unix()).substring(0, 5);
-
         const username = `${matchedDepartment.title}-${lastname}-${uid}`.toLowerCase();
-        handleCreatePassword();
 
         setUsername(username);
         setValue("username", username);
       }
     },
-    [departments, setValue, handleCreatePassword]
+    [departments, setValue]
   );
 
   const handleSetPasswordStrength = (strength: number) => {
@@ -185,7 +183,8 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
           <div className="flex flex-col gap-2">
             <p className="text-sm">
-              <span className="text-red-600 mr-1">*</span>Username
+              <span className="text-red-600 mr-1">*</span>
+              Username
             </p>
 
             <input type="text" defaultValue={username} {...register("username")} required />
