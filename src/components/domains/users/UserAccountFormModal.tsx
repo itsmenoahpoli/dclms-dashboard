@@ -29,6 +29,8 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
   });
 
   const usernameParams = watch(["name", "departmentId"]);
+  const userRoleParams = watch(["userRoleId"]);
+  const [userTypeDisabled, setUserTypeDisabled] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -107,6 +109,17 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
   }, [usernameParams, getValues, handleCreateUsername]);
 
   React.useEffect(() => {
+    const userRoleId = getValues("userRoleId");
+
+    if (+userRoleId === 2) {
+      setValue("departmentId", 6);
+      setUserTypeDisabled(true);
+    } else {
+      setUserTypeDisabled(false);
+    }
+  }, [getValues, setValue, userRoleParams, departments]);
+
+  React.useEffect(() => {
     // SET FORM VALUES BASED ON PROPS.DATA
     if (props.data) {
       for (const [key, value] of Object.entries(props.data)) {
@@ -127,17 +140,22 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
           <div className="flex flex-col gap-2">
             <p className="text-sm">
               <span className="text-red-600 mr-1">*</span>
-              E-mail
+              Account Type
             </p>
-            <input type="email" {...register("email")} required />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <p className="text-sm">
-              <span className="text-red-600 mr-1">*</span>
-              Full Name
-            </p>
-            <input type="text" {...register("name")} required />
+            {userRolesLoading ? (
+              "Fetching account types ..."
+            ) : (
+              <select {...register("userRoleId")} disabled={userTypeDisabled} required>
+                <option value="">--</option>
+                {userRoles
+                  .filter((userRole: any) => userRole.name !== "superadmin")
+                  .map((userRole: any) => (
+                    <option value={userRole.id} key={userRole.name}>
+                      {_.startCase(transformRoleLabel(userRole.name))}
+                    </option>
+                  ))}
+              </select>
+            )}
           </div>
 
           <div className="flex flex-col gap-2">
@@ -163,22 +181,9 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
           <div className="flex flex-col gap-2">
             <p className="text-sm">
               <span className="text-red-600 mr-1">*</span>
-              Account Type
+              Full Name
             </p>
-            {userRolesLoading ? (
-              "Fetching account types ..."
-            ) : (
-              <select {...register("userRoleId")} required>
-                <option value="">--</option>
-                {userRoles
-                  .filter((userRole: any) => userRole.name !== "superadmin")
-                  .map((userRole: any) => (
-                    <option value={userRole.id} key={userRole.name}>
-                      {_.startCase(transformRoleLabel(userRole.name))}
-                    </option>
-                  ))}
-              </select>
-            )}
+            <input type="text" {...register("name")} required />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -189,6 +194,14 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
             <input type="text" defaultValue={username} {...register("username")} required />
             <small className="text-gray-500">{"Default format - {department}-{lastname}-{any unique identifier}"}</small>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              E-mail
+            </p>
+            <input type="email" {...register("email")} required />
           </div>
 
           {props.formType === "add" ? (

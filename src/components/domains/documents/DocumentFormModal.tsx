@@ -23,6 +23,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   const { user } = useAuthStore();
   const { handleSubmit, register, setValue, reset } = useForm();
 
+  const [validLink, setValidLink] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSubmitForm = handleSubmit(async (formData: any) => {
@@ -44,6 +45,16 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
       console.log("update");
     }
   });
+
+  const handleValidateDocumentLink = (link: string) => {
+    if (link.includes("https://hauph-my.sharepoint.com/")) {
+      setValidLink(true);
+
+      return;
+    }
+
+    setValidLink(false);
+  };
 
   React.useEffect(() => {
     setValue("nature", "Creation");
@@ -67,7 +78,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
               <span className="text-red-600 mr-1">*</span>
               External Link/URL
             </p>
-            <input {...register("externalUrl")} required />
+            <input {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
             <p className="text-xs text-gray-600">Make sure the url is public</p>
           </div>
 
@@ -108,7 +119,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex flex-row justify-end gap-3">
-            <Button color="success" type="submit" disabled={loading}>
+            <Button color="success" type="submit" disabled={loading || validLink}>
               {loading ? <Spinner /> : props.formType === "add" ? "Create Document" : "Update Document"}
             </Button>
             <Button color="light" onClick={props.handleClose}>
