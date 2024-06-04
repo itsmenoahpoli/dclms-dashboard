@@ -30,7 +30,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
   const usernameParams = watch(["name", "departmentId"]);
   const userRoleParams = watch(["userRoleId"]);
-  const [userTypeDisabled, setUserTypeDisabled] = React.useState<boolean>(false);
+  const [userDepartmentDisabled, setDepartmentDisabled] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -113,9 +113,10 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
     if (+userRoleId === 2) {
       setValue("departmentId", 6);
-      setUserTypeDisabled(true);
+      setDepartmentDisabled(true);
     } else {
-      setUserTypeDisabled(false);
+      setValue("departmentId", null);
+      setDepartmentDisabled(false);
     }
   }, [getValues, setValue, userRoleParams, departments]);
 
@@ -145,7 +146,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
             {userRolesLoading ? (
               "Fetching account types ..."
             ) : (
-              <select {...register("userRoleId")} disabled={userTypeDisabled} required>
+              <select {...register("userRoleId")} required>
                 <option value="">--</option>
                 {userRoles
                   .filter((userRole: any) => userRole.name !== "superadmin")
@@ -167,7 +168,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
             {departmentsLoading ? (
               "Fetching departments ..."
             ) : (
-              <select {...register("departmentId")}>
+              <select {...register("departmentId")} disabled={userDepartmentDisabled}>
                 <option value="">--</option>
                 {departments.map((department: any) => (
                   <option value={department.id} key={department.name}>
@@ -214,7 +215,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
               <button className="text-sm text-left text-blue-700 underline" type="button" onClick={handleCreatePassword}>
                 Generate new password
               </button>
-              <PasswordStrengthBar password={password} onChangeScore={handleSetPasswordStrength} />
+              {password.length ? <PasswordStrengthBar password={password} onChangeScore={handleSetPasswordStrength} /> : null}
             </div>
           ) : null}
 
