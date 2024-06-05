@@ -90,7 +90,6 @@ export const UsersService = {
         return response.data;
       })
       .catch((error) => {
-        console.log(error);
         if (error.response?.status === 400) {
           toast.error("E-mail/Name already associated with another account");
         } else {

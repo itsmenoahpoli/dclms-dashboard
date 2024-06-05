@@ -84,7 +84,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
       reset();
       setValue("username", "");
       setValue("password", "");
-      await UsersService.createUser(formData, props.handleClose());
+      await UsersService.createUser(formData, props.handleClose);
     } else {
       delete formData.password;
       await UsersService.updateUser(formData.id, formData);
