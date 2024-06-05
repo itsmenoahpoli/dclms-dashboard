@@ -11,12 +11,15 @@ type Props = {
   show: boolean;
   formType: "add" | "update";
   data?: any;
+  disableDC: boolean;
   refetch: () => void;
   handleClose: () => void;
 };
 
 export const UserAccountFormModal: React.FC<Props> = (props) => {
   const { handleSubmit, register, getValues, setValue, watch, reset } = useForm();
+
+  console.log(props.disableDC);
 
   const { data: departments, isFetching: departmentsLoading } = useQuery({
     queryKey: ["data-departments"],
@@ -40,11 +43,9 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
 
     let result = "";
     for (let i = 0; i < length; i++) {
-      // Get a random index within the charset length
       const randomIndex = Math.floor(Math.random() * charset.length);
-      // Extract the character at the random index
       const randomChar = charset[randomIndex];
-      // Add the character to the result string
+
       result += randomChar;
     }
 
@@ -112,6 +113,11 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     }
   };
 
+  const handleCloseModal = () => {
+    reset();
+    props.handleClose();
+  };
+
   React.useEffect(() => {
     handleCreateUsername(getValues("name"), getValues("departmentId"));
   }, [usernameParams, getValues, handleCreateUsername]);
@@ -130,7 +136,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
   }, [props.data, setValue]);
 
   return (
-    <Modal show={props.show} onClose={props.handleClose}>
+    <Modal show={props.show} onClose={handleCloseModal}>
       <Modal.Header>Account Details</Modal.Header>
       <Modal.Body>
         <form className="flex flex-col gap-5" onSubmit={handleSubmitForm}>
@@ -147,7 +153,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
                 {userRoles
                   .filter((userRole: any) => userRole.name !== "superadmin" && userRole.name !== "quality-management-representative")
                   .map((userRole: any) => (
-                    <option value={userRole.id} key={userRole.name}>
+                    <option value={userRole.id} key={userRole.name} hidden={props.disableDC && userRole.name === "document-controller"}>
                       {_.startCase(transformRoleLabel(userRole.name))}
                     </option>
                   ))}
@@ -219,7 +225,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
             <Button color="success" type="submit" disabled={loading || passwordStrength < 3}>
               {loading ? <Spinner /> : props.formType === "add" ? "Create Account" : "Update Account"}
             </Button>
-            <Button color="light" onClick={props.handleClose}>
+            <Button color="light" onClick={handleCloseModal}>
               Close
             </Button>
           </div>

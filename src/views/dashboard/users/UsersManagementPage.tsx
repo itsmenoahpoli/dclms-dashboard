@@ -20,6 +20,7 @@ const UsersManagementPage: React.FC = () => {
     show: false,
     selectedData: undefined,
   });
+  const [disableDc, setDisableDc] = React.useState<boolean>(false);
 
   const handleFormModal = (data: FormModal) => {
     setFormModal(data);
@@ -93,6 +94,16 @@ const UsersManagementPage: React.FC = () => {
     },
   ];
 
+  React.useEffect(() => {
+    if (data) {
+      if (data.filter((user: any) => +user.userRoleId === 2).length > 0) {
+        setDisableDc(true);
+      }
+    } else {
+      setDisableDc(false);
+    }
+  }, [data]);
+
   return (
     <div>
       {DialogComponent}
@@ -101,6 +112,7 @@ const UsersManagementPage: React.FC = () => {
         show={formModal.show}
         formType={formModal.selectedData ? "update" : "add"}
         data={formModal.selectedData}
+        disableDC={disableDc}
         refetch={refetch}
         handleClose={() => handleFormModal({ show: false, selectedData: undefined })}
       />
