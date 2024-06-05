@@ -104,21 +104,19 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     return name;
   };
 
-  React.useEffect(() => {
-    handleCreateUsername(getValues("name"), getValues("departmentId"));
-  }, [usernameParams, getValues, handleCreateUsername]);
-
-  React.useEffect(() => {
-    const userRoleId = getValues("userRoleId");
-
-    if (+userRoleId === 2) {
+  const handleSelectUserRole = (userRoleId: number) => {
+    if (userRoleId && +userRoleId === 2) {
       setValue("departmentId", 3);
       setDepartmentDisabled(true);
     } else {
       setValue("departmentId", null);
       setDepartmentDisabled(false);
     }
-  }, [getValues, setValue, userRoleParams, departments]);
+  };
+
+  React.useEffect(() => {
+    handleCreateUsername(getValues("name"), getValues("departmentId"));
+  }, [usernameParams, getValues, handleCreateUsername]);
 
   React.useEffect(() => {
     // SET FORM VALUES BASED ON PROPS.DATA
@@ -146,7 +144,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
             {userRolesLoading ? (
               "Fetching account types ..."
             ) : (
-              <select {...register("userRoleId")} required>
+              <select {...register("userRoleId")} onChange={(e) => handleSelectUserRole(+e.target.value)} required>
                 <option value="">--</option>
                 {userRoles
                   .filter((userRole: any) => userRole.name !== "superadmin" && userRole.name !== "quality-management-representative")
