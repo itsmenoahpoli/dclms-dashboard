@@ -21,6 +21,7 @@ export const UsersService = {
       .post("/user-roles", roleData)
       .then((response) => {
         toast.success("Role successfully created");
+
         return response.data;
       })
       .catch((error) => {
@@ -37,7 +38,8 @@ export const UsersService = {
     return await http
       .patch("/user-roles/" + id, roleData)
       .then((response) => {
-        toast.success("Role successfully created");
+        toast.success("Role successfully updated");
+
         return response.data;
       })
       .catch((error) => {
@@ -65,6 +67,7 @@ export const UsersService = {
       .patch("/accounts/" + id, { ...userData, userRoleId: +userData.userRoleId, departmentId: +userData.departmentId })
       .then((response) => {
         toast.info("Account successfully updated");
+
         return response.data;
       })
       .catch((error) => {
@@ -74,7 +77,7 @@ export const UsersService = {
       });
   },
 
-  createUser: async function (userData: any) {
+  createUser: async function (userData: any, closeModal: any) {
     userData.userRoleId = +userData.userRoleId;
     userData.departmentId = userData.departmentId ? +userData.departmentId : null;
 
@@ -82,12 +85,14 @@ export const UsersService = {
       .post("/accounts", userData)
       .then((response) => {
         toast.success("Account successfully created");
+        closeModal();
+
         return response.data;
       })
       .catch((error) => {
         console.log(error);
         if (error.response?.status === 400) {
-          toast.error("E-mail already used");
+          toast.error("E-mail/Name already associated with another account");
         } else {
           toast.error("Failed to add user account");
         }

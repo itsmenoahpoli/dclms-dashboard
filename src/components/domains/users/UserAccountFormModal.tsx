@@ -29,7 +29,6 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
   });
 
   const usernameParams = watch(["name", "departmentId"]);
-  const userRoleParams = watch(["userRoleId"]);
   const [userDepartmentDisabled, setDepartmentDisabled] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
@@ -85,14 +84,13 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
       reset();
       setValue("username", "");
       setValue("password", "");
-      await UsersService.createUser(formData);
+      await UsersService.createUser(formData, props.handleClose());
     } else {
       delete formData.password;
       await UsersService.updateUser(formData.id, formData);
     }
 
     props.refetch();
-    props.handleClose();
     setLoading(false);
   });
 
