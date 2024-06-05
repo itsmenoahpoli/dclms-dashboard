@@ -112,7 +112,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
     const userRoleId = getValues("userRoleId");
 
     if (+userRoleId === 2) {
-      setValue("departmentId", 6);
+      setValue("departmentId", 3);
       setDepartmentDisabled(true);
     } else {
       setValue("departmentId", null);
@@ -149,7 +149,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
               <select {...register("userRoleId")} required>
                 <option value="">--</option>
                 {userRoles
-                  .filter((userRole: any) => userRole.name !== "superadmin")
+                  .filter((userRole: any) => userRole.name !== "superadmin" && userRole.name !== "quality-management-representative")
                   .map((userRole: any) => (
                     <option value={userRole.id} key={userRole.name}>
                       {_.startCase(transformRoleLabel(userRole.name))}
