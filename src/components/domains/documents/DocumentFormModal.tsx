@@ -47,8 +47,6 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   });
 
   const handleValidateDocumentLink = (link: string) => {
-    console.log("handleValidateDocumentLink", link);
-    console.log(link.includes("https://hauph-my.sharepoint.com"));
     if (link.includes("https://hauph-my.sharepoint.com")) {
       setValidLink(true);
 
@@ -80,6 +78,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
               <span className="text-red-600 mr-1">*</span>
               External Link/URL
             </p>
+            {!validLink ? <p className="text-xs text-red-600">Must be a valid HAU sharepoint url</p> : null}
             <input {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
             <p className="text-xs text-gray-600">Make sure the url is public</p>
           </div>
