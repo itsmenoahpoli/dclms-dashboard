@@ -102,7 +102,7 @@ export const DocumentsService = {
 
   createDocument: async function (documentData: any) {
     return await http
-      .post("/documents", documentData)
+      .post("/documents", { ...documentData, totalPages: +documentData.totalPages })
       .then((response) => {
         toast.success("Document created");
 
