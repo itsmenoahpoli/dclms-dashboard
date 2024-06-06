@@ -56,7 +56,7 @@ export const DepartmentFormModal: React.FC<Props> = (props) => {
               <span className="text-red-600 mr-1">*</span>
               Series Number Prefix
             </p>
-            <input type="text" {...register("seriesPrefix")} required />
+            <input type="number" {...register("seriesPrefix")} required />
           </div>
 
           <div className="flex flex-row justify-end gap-3">
