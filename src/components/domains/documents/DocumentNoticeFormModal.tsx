@@ -47,13 +47,14 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
   });
 
   const handleValidateDocumentLink = (link: string) => {
-    if (link.includes("https://hauph-my.sharepoint.com")) {
-      setValidLink(true);
+    setValidLink(true);
+    // if (link.includes("https://hauph-my.sharepoint.com")) {
+    //   setValidLink(true);
 
-      return;
-    }
+    //   return;
+    // }
 
-    setValidLink(false);
+    // setValidLink(false);
   };
 
   React.useEffect(() => {
