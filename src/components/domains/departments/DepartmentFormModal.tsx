@@ -21,6 +21,8 @@ export const DepartmentFormModal: React.FC<Props> = (props) => {
 
     if (props.formType === "add") {
       await DepartmentsService.createDepartment(formData, setLoading);
+    } else {
+      await DepartmentsService.updateDepartment(props.data.id, formData, setLoading);
     }
 
     props.handleClose();

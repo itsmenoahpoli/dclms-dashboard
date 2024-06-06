@@ -25,10 +25,6 @@ const DepartmentsManagementPage: React.FC = () => {
     setFormModal(data);
   };
 
-  const handleUpdate = (data: any) => {
-    setFormModal({ show: true, selectedData: data });
-  };
-
   const handleDelete = async (id: number) => {
     showConfirm({
       open: true,
@@ -77,10 +73,6 @@ const DepartmentsManagementPage: React.FC = () => {
       cell: (row: any) => {
         return (
           <div className="flex flex-row gap-6">
-            <button className="font-medium" onClick={() => handleUpdate(row)}>
-              Update
-            </button>
-
             {row.users?.length || row.documents?.length ? (
               <div className="w-[50px] text-center">--</div>
             ) : (

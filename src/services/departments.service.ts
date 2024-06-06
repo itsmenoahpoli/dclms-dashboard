@@ -26,6 +26,21 @@ export const DepartmentsService = {
       });
   },
 
+  updateDepartment: async function (id: number, data: any, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    return await http
+      .patch("/departments/" + id, data)
+      .then((response) => {
+        toast.success("Successfully updated department");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to update department");
+      })
+      .finally(() => setLoading(false));
+  },
+
   createDepartment: async function (data: any, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
     return await http
       .post("/departments/", data)

@@ -21,7 +21,7 @@ const sourceDocumentTypes = ["Quality Management", "Procedures Manual", "Forms M
 
 export const DocumentFormModal: React.FC<Props> = (props) => {
   const { user } = useAuthStore();
-  const { handleSubmit, register, setValue, reset } = useForm();
+  const { handleSubmit, register, reset } = useForm();
 
   const [validLink, setValidLink] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -41,8 +41,6 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
         reset();
         setLoading(false);
       });
-    } else {
-      console.log("update");
     }
   });
 
@@ -55,10 +53,6 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
 
     setValidLink(false);
   };
-
-  React.useEffect(() => {
-    setValue("nature", "Creation");
-  }, [setValue]);
 
   return (
     <Modal show={props.show} onClose={props.handleClose}>
@@ -79,8 +73,16 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
               External Link/URL
             </p>
             {!validLink ? <p className="text-xs text-red-600">Must be a valid HAU sharepoint url</p> : null}
-            <input {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
+            <input type="url" {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
             <p className="text-xs text-gray-600">Make sure the url is public</p>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              Total Pages
+            </p>
+            <input type="number" defaultValue={0} {...register("totalPages")} required />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -96,27 +98,6 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className="w-full flex flex-col gap-1">
-            <p className="text-sm">
-              <span className="text-red-600 mr-1">*</span>
-              Nature of Modification
-            </p>
-            <input className="bg-gray-200" {...register("nature")} readOnly required />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <p className="text-sm">
-              <span className="text-red-600 mr-1">*</span>
-              Details of Modification
-            </p>
-            <textarea rows={7} {...register("modification_detail")} required />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <p className="text-sm">Remarks</p>
-            <textarea rows={7} {...register("remars")} />
           </div>
 
           <div className="flex flex-row justify-end gap-3">
