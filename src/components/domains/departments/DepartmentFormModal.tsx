@@ -29,6 +29,7 @@ export const DepartmentFormModal: React.FC<Props> = (props) => {
 
   const handleCloseModal = () => {
     reset();
+    props.handleClose();
   };
 
   return (
