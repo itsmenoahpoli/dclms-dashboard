@@ -1,11 +1,12 @@
 import React from "react";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
+import { DepartmentFormModal } from "@/components/domains/departments";
 import { PageHeader, LoadingIndicator } from "@/components/shared";
 import { DepartmentsService } from "@/services";
 import { datesUtils } from "@/utils";
 import { useDialog } from "@/hooks";
-// import type { FormModal } from "@/types/shared";
+import type { FormModal } from "@/types/shared";
 
 const DepartmentsManagementPage: React.FC = () => {
   const { showConfirm, closeConfirm, DialogComponent } = useDialog();
@@ -14,6 +15,15 @@ const DepartmentsManagementPage: React.FC = () => {
     queryKey: ["data-users-list"],
     queryFn: async () => await DepartmentsService.getDepartmentsList(),
   });
+
+  const [formModal, setFormModal] = React.useState<FormModal>({
+    show: false,
+    selectedData: undefined,
+  });
+
+  const handleFormModal = (data: FormModal) => {
+    setFormModal(data);
+  };
 
   const handleUpdate = (data: any) => {
     console.log(data);
@@ -88,13 +98,23 @@ const DepartmentsManagementPage: React.FC = () => {
     <div>
       {DialogComponent}
 
+      <DepartmentFormModal
+        show={formModal.show}
+        formType={formModal.selectedData ? "update" : "add"}
+        data={formModal.selectedData}
+        refetch={refetch}
+        handleClose={() => handleFormModal({ show: false, selectedData: undefined })}
+      />
+
       <PageHeader
         title="Departments Management"
         subtitle="View and manage departments and departments information"
         breadcrumbs={["Departments Management"]}
       >
         <div className="flex flex-row max-md:flex-col justify-end gap-3 w-full">
-          <button className="h-[35px] max-md:!w-full px-3 rounded bg-primary text-white text-sm">Add Department</button>
+          <button className="h-[35px] max-md:!w-full px-3 rounded bg-primary text-white text-sm" onClick={() => handleFormModal({ show: true })}>
+            Add Department
+          </button>
         </div>
       </PageHeader>
 

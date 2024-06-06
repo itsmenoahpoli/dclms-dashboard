@@ -1,11 +1,31 @@
 import React from "react";
 import { PageHeader } from "@/components/shared";
 
-// const overviewStatistics = [
-//   {
-//     label: 'Total Documents',
-//   },
-// ]
+
+const overviewStatistics = [
+  {
+    label: 'Approved Documents',
+    name: 'approved-documents'
+  },
+  {
+    label: 'In-progress Documents',
+    name: 'inprogress-documents'
+  },
+  {
+    label: 'Submitted Documents',
+    name: 'submitted-documents'
+  },
+  {
+    label: 'Archived Documents',
+    name: 'archived-documents'
+  },
+  {
+    label: 'Total Departents',
+    name: 'total-departments'
+  },
+]
+
+console.log(overviewStatistics)
 
 const DashboardHomePage: React.FC = () => {
   return (

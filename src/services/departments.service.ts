@@ -25,4 +25,19 @@ export const DepartmentsService = {
         toast.error("Failed to delete department");
       });
   },
+
+  createDepartment: async function (data: any, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    return await http
+      .post("/departments/", data)
+      .then((response) => {
+        toast.success("Successfully added department");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to add department");
+      })
+      .finally(() => setLoading(false));
+  },
 };
