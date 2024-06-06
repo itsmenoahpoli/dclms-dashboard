@@ -27,9 +27,11 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
       documentId: +props.documentId,
       details: "",
       nature: "",
+      externalUrl: "",
     },
   });
 
+  const [validLink, setValidLink] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleNoticeSubmit = handleSubmit(async (formData: any) => {
@@ -43,6 +45,16 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
     props.fetchDocumentNotices();
     props.handleClose();
   });
+
+  const handleValidateDocumentLink = (link: string) => {
+    if (link.includes("https://hauph-my.sharepoint.com")) {
+      setValidLink(true);
+
+      return;
+    }
+
+    setValidLink(false);
+  };
 
   React.useEffect(() => {
     if (props.isDeletion) {
@@ -84,13 +96,23 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
             </div>
           </div>
 
+          <div className="flex flex-col gap-2">
+            <p className="text-sm">
+              <span className="text-red-600 mr-1">*</span>
+              External Link/URL
+            </p>
+            {!validLink ? <p className="text-xs text-red-600">Must be a valid HAU sharepoint url</p> : null}
+            <input type="url" {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
+            <p className="text-xs text-gray-600">Make sure the url is public</p>
+          </div>
+
           <div className="w-full flex flex-col gap-1">
             <p>Details of Modification</p>
             <textarea rows={5} {...register("details")} required />
           </div>
 
           <div className="flex flex-row justify-end gap-3 mt-5">
-            <Button color="success" type="submit" disabled={loading}>
+            <Button color="success" type="submit" disabled={loading || !validLink}>
               {loading ? <Spinner /> : "Submit Notice"}
             </Button>
             <Button color="light" onClick={props.handleClose}>
