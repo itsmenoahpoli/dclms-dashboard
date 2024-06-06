@@ -35,8 +35,11 @@ export const DepartmentsService = {
         return response.data;
       })
       .catch((error) => {
-        console.log(error);
-        toast.error("Failed to add department");
+        if (error.response?.status === 401) {
+          toast.error("Details already associated with an existing department");
+        } else {
+          toast.error("Failed to add department");
+        }
       })
       .finally(() => setLoading(false));
   },

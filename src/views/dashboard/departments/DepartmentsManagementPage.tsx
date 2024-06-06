@@ -26,7 +26,7 @@ const DepartmentsManagementPage: React.FC = () => {
   };
 
   const handleUpdate = (data: any) => {
-    console.log(data);
+    setFormModal({ show: true, selectedData: data });
   };
 
   const handleDelete = async (id: number) => {
