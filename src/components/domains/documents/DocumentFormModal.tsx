@@ -47,7 +47,9 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   });
 
   const handleValidateDocumentLink = (link: string) => {
-    if (link.includes("https://hauph-my.sharepoint.com/")) {
+    console.log("handleValidateDocumentLink", link);
+    console.log(link.includes("https://hauph-my.sharepoint.com"));
+    if (link.includes("https://hauph-my.sharepoint.com")) {
       setValidLink(true);
 
       return;
@@ -119,7 +121,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex flex-row justify-end gap-3">
-            <Button color="success" type="submit" disabled={loading || validLink}>
+            <Button color="success" type="submit" disabled={loading || !validLink}>
               {loading ? <Spinner /> : props.formType === "add" ? "Create Document" : "Update Document"}
             </Button>
             <Button color="light" onClick={props.handleClose}>
