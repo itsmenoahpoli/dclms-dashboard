@@ -1,6 +1,6 @@
 import React from "react";
 import DataTable from "react-data-table-component";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "flowbite-react";
 import { FiEye } from "react-icons/fi";
@@ -18,7 +18,7 @@ type DocumentInformationModal = {
 };
 
 const DocumentsManagementPage: React.FC = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user } = useAuthStore();
 
   const { isFetching, data, refetch } = useQuery({
@@ -48,7 +48,8 @@ const DocumentsManagementPage: React.FC = () => {
   };
 
   const handleViewDocument = (id: number) => {
-    navigate(`/dashboard/documents/${id}/manage`);
+    setInformationModal({ show: true, selectedDataId: id });
+    // navigate(`/dashboard/documents/${id}/manage`);
   };
 
   const handleCloseViewDocument = () => {

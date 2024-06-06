@@ -46,7 +46,7 @@ export const DocumentInformation: React.FC<Props> = (props) => {
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Submitted by:</div>
-        <div className="text-left text-gray-500">{props.documentInformation.originator.name}</div>
+        <div className="text-left text-gray-500">{props.documentInformation.originatorName}</div>
       </div>
       <div className="flex flex-row gap-5 py-5 border-b-2 border-gray-100">
         <div className="w-[180px] text-left">Link:</div>
