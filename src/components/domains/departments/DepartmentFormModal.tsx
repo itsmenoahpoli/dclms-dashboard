@@ -61,7 +61,7 @@ export const DepartmentFormModal: React.FC<Props> = (props) => {
 
           <div className="flex flex-row justify-end gap-3">
             <Button color="success" type="submit" disabled={loading}>
-              {loading ? <Spinner /> : props.formType === "add" ? "Create Account" : "Update Account"}
+              {loading ? <Spinner /> : props.formType === "add" ? "Create Department" : "Update Department"}
             </Button>
             <Button color="light" onClick={handleCloseModal}>
               Close
