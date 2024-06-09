@@ -189,12 +189,12 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
               </div>
 
               <div className="flex flex-row gap-2">
-                {IS_ORIGINATOR ? (
+                {/* {IS_ORIGINATOR ? (
                   <Button color="blue" className="flex flex-row items-center !bg-blue-900" onClick={() => handleInfoForm(true)}>
                     <FiEdit3 size={22} />
                     &nbsp; Update Information
                   </Button>
-                ) : null}
+                ) : null} */}
                 {!IS_ORIGINATOR && documentInformation && documentInformation.status === "pending" && checkApprovalStatus() ? (
                   <>
                     <Button color="success" onClick={() => handleUpdateStatus("approved")} disabled={updateStatusLoading}>
