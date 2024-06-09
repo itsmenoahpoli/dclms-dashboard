@@ -1,7 +1,7 @@
 import React from "react";
 import { Badge, Button, Spinner } from "flowbite-react";
 import { DocumentNoticesService } from "@/services";
-import { IS_DC } from "@/constants";
+import { IS_DC, IS_ORIGINATOR } from "@/constants";
 import { datesUtils } from "@/utils";
 
 type Props = {
@@ -92,6 +92,12 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
         {IS_DC && !approvalDate && props.showActionButtons ? (
           <Button size="xs" color="success" className="w-1/2" disabled={approveLoading} onClick={() => handleApproveNotice(id)}>
             {approveLoading ? <Spinner /> : "Approve"}
+          </Button>
+        ) : null}
+
+        {IS_ORIGINATOR ? (
+          <Button size="xs" color="success" className="w-1/2" disabled={true}>
+            Comply
           </Button>
         ) : null}
       </div>

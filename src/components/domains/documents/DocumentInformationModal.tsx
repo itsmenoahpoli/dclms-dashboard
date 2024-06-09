@@ -195,7 +195,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
                     &nbsp; Update Information
                   </Button>
                 ) : null}
-                {documentInformation && documentInformation.status === "pending" && checkApprovalStatus() ? (
+                {!IS_ORIGINATOR && documentInformation && documentInformation.status === "pending" && checkApprovalStatus() ? (
                   <>
                     <Button color="success" onClick={() => handleUpdateStatus("approved")} disabled={updateStatusLoading}>
                       Approve Document
