@@ -45,6 +45,7 @@ export const DocumentFormModal: React.FC<Props> = (props) => {
   });
 
   const handleValidateDocumentLink = (link: string) => {
+    console.log(link);
     setValidLink(true);
     // if (link.includes("https://hauph-my.sharepoint.com")) {
     //   setValidLink(true);
