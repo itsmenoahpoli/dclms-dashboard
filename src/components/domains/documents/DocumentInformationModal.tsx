@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Tabs, Button } from "flowbite-react";
-import { FiEdit3, FiPlusCircle, FiTrash2 } from "react-icons/fi";
+import { FiPlusCircle, FiTrash2 } from "react-icons/fi";
 import { DocumentInformation, DocumentNoticesList, DocumentNoticeFormModal, DocumentUpdateInformationModal } from "@/components/domains/documents";
 import { LoadingIndicator } from "@/components/shared";
 import { DocumentsService } from "@/services";
