@@ -111,6 +111,10 @@ export const DocumentsService = {
   },
 
   createDocument: async function (documentData: any) {
+    if (!documentData.type) {
+      documentData.type = "originator-request";
+    }
+
     return await http
       .post("/documents", { ...documentData, totalPages: +documentData.totalPages })
       .then((response) => {
