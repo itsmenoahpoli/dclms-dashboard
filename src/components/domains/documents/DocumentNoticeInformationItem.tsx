@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
-  const { id, revisionNumber, details, nature, requestedBy, approvalDate } = props.data;
+  const { id, revisionNumber, externalUrl, details, nature, requestedBy, approvalDate } = props.data;
 
   const [approveLoading, setApproveLoading] = React.useState<boolean>(false);
 
@@ -62,6 +62,19 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
           <div>
             <p className="font-medium">Source Document Type</p>
             <p className="text-sm text-gray-700">{props.sourceDocumentType}</p>
+          </div>
+
+          <div>
+            <p className="font-medium">External Url</p>
+            <p className="text-sm text-gray-700">
+              {externalUrl ? (
+                <a href={externalUrl} target="_blank" className="text-blue-600 underline">
+                  {externalUrl}
+                </a>
+              ) : (
+                "--"
+              )}
+            </p>
           </div>
 
           <div>

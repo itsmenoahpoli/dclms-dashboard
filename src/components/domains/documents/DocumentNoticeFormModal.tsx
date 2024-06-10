@@ -26,7 +26,7 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
     defaultValues: {
       documentId: +props.documentId,
       details: "",
-      nature: "",
+      nature: "revision",
       externalUrl: "",
       pageNumber: "",
     },

@@ -164,12 +164,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
               <div className="flex flex-row justify-between gap-2">
                 {documentInformation?.documentNotices ? (
                   <>
-                    <Button
-                      color="blue"
-                      className="flex flex-row items-center"
-                      disabled={checkDisableAddNotice()}
-                      onClick={() => handleNoticeForm(true)}
-                    >
+                    <Button color="blue" className="flex flex-row items-center" onClick={() => handleNoticeForm(true)}>
                       <FiPlusCircle size={22} />
                       &nbsp; Add Revision Notice
                     </Button>
