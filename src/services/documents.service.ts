@@ -12,6 +12,16 @@ export const DocumentsService = {
       });
   },
 
+  getArchivedDocumentsList: async function () {
+    return await http
+      .get("/documents/archived")
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to get archived document list");
+      });
+  },
+
   getDocumentsListByStatus: async function (status: string | null) {
     if (!status) {
       return await this.getDocumentsList();

@@ -22,7 +22,7 @@ const DocumentArchivesManagementPage: React.FC = () => {
     queryKey: ["data-documents"],
     queryFn: async () => {
       if (IS_SUPERADMIN || IS_DC || IS_QMR) {
-        return await DocumentsService.getDocumentsList();
+        return await DocumentsService.getArchivedDocumentsList();
       }
 
       if (IS_ORIGINATOR) {
