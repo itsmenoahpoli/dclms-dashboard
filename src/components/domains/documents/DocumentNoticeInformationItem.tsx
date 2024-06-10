@@ -78,10 +78,10 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
           <div>
             <p className="font-medium">Approval Date</p>
-            <p className="text-sm text-gray-700 font-bold">{datesUtils.formatDate(approvalDate) || "--"}</p>
+            <p className="text-sm text-gray-700 font-bold">{approvalDate ? datesUtils.formatDate(approvalDate) : "--"}</p>
           </div>
 
-          <div>
+          <div className="hidden">
             <p className="font-medium">Approval Status</p>
             <p className="text-sm text-gray-700 font-bold">
               {!approvalDate ? <span className="text-yellow-400">x &nbsp;PENDING</span> : <span className="text-green-800">√ &nbsp; APPROVED</span>}

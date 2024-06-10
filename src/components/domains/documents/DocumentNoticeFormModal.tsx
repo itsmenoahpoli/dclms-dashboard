@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Modal, Button, Spinner } from "flowbite-react";
 import { DocumentNoticesService } from "@/services";
-import { IS_DC, IS_ORIGINATOR } from "@/constants";
+import { IS_ORIGINATOR } from "@/constants";
 
 type Props = {
   documentExternalUrl: string;
