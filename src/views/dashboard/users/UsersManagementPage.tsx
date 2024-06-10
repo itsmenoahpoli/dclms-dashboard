@@ -51,6 +51,11 @@ const UsersManagementPage: React.FC = () => {
 
   const tableColumns = [
     {
+      name: "Account Type",
+      sortable: true,
+      selector: (row: any) => row.userRole.name,
+    },
+    {
       name: "Full Name",
       sortable: true,
       selector: (row: any) => row.name,

@@ -104,7 +104,8 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
   };
 
   const handleSelectUserRole = (userRoleId: number) => {
-    if (userRoleId && +userRoleId === 2) {
+    console.log(userRoleId);
+    if (userRoleId && +userRoleId === 3) {
       setValue("departmentId", 3);
       setDepartmentDisabled(true);
     } else {
