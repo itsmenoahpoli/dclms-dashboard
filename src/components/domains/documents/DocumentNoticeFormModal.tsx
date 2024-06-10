@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Modal, Button, Spinner } from "flowbite-react";
 import { DocumentNoticesService } from "@/services";
-import { IS_DC } from "@/constants";
+import { IS_DC, IS_ORIGINATOR } from "@/constants";
 
 type Props = {
   documentExternalUrl: string;
@@ -38,8 +38,9 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
   const handleNoticeSubmit = handleSubmit(async (formData: any) => {
     setLoading(true);
 
-    if (IS_DC) {
+    if (!IS_ORIGINATOR) {
       formData["requestedBy"] = "Document Controller";
+      formData["type"] = "document-controller-request";
     }
 
     await DocumentNoticesService.createDocumentNotice(formData, setLoading).finally(() => reset());
