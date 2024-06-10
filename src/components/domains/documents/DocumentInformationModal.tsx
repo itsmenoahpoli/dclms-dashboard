@@ -149,6 +149,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
               </Tabs.Item>
               <Tabs.Item title="Document Notices (from DC/QMR)">
                 <DocumentNoticesList
+                  originatorName={documentInformation.originatorName}
                   documentNotices={documentInformation.documentNotices}
                   sourceDocumentType={documentInformation.sourceDocument}
                   refetch={fetchData}

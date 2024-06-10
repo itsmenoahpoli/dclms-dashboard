@@ -223,7 +223,7 @@ export const UserAccountFormModal: React.FC<Props> = (props) => {
           ) : null}
 
           <div className="flex flex-row justify-end gap-3">
-            <Button color="success" type="submit">
+            <Button color="success" type="submit" disabled={loading || (passwordStrength < 3 && props.formType === "add")}>
               {loading ? <Spinner /> : props.formType === "add" ? "Create Account" : "Update Account"}
             </Button>
             <Button color="light" onClick={handleCloseModal}>

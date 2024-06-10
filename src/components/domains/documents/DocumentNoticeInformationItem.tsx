@@ -8,6 +8,8 @@ type Props = {
   showActionButtons?: boolean;
   sourceDocumentType: string;
   data?: any;
+  originatorName?: string;
+  isFirst?: boolean;
   refetch: () => void;
 };
 
@@ -46,7 +48,7 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
         <div className="flex flex-row gap-2">
           <Badge color="blue" className="border border-gray-600">
-            Requested by &mdash; {requestedBy}
+            Requested by &mdash; {props.isFirst ? props.originatorName : requestedBy}
           </Badge>
           <Badge color={getBadgeColor(nature)} className="border border-gray-600">
             {nature.toUpperCase()}
