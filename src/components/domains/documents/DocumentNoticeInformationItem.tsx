@@ -66,15 +66,17 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
           <div>
             <p className="font-medium">External Url</p>
-            <p className="text-sm text-gray-700">
-              {externalUrl ? (
-                <a href={externalUrl} target="_blank" className="text-blue-600 underline">
-                  {externalUrl}
-                </a>
-              ) : (
-                "--"
-              )}
-            </p>
+            <div className="w-3/4 break-words text-wrap">
+              <p className="text-sm text-gray-700 ">
+                {externalUrl ? (
+                  <a href={externalUrl} target="_blank" className="text-blue-600 underline text-ellipsis overflow-hidden w-[500px]">
+                    {externalUrl}
+                  </a>
+                ) : (
+                  "--"
+                )}
+              </p>
+            </div>
           </div>
 
           <div>
