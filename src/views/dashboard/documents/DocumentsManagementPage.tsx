@@ -56,17 +56,31 @@ const DocumentsManagementPage: React.FC = () => {
     setInformationModal({ show: false, selectedDataId: undefined });
   };
 
+  const getDocumentStatus = (documentInformation: any) => {
+    if (documentInformation.documentNotices?.length === 1) {
+      return "pending";
+    }
+
+    if (documentInformation.documentNotices?.length > 1) {
+      return "in-progress";
+    }
+
+    return documentInformation.status;
+  };
+
   const getBadgeColor = (status: string) => {
     switch (status) {
       case "pending":
         return "yellow";
 
+      case "in-progress":
+        return "blue";
+
       case "approved":
         return "green";
 
-      case "declined":
-      case "archived":
-        return "red";
+      case "archive":
+        return "failure";
 
       default:
         return "blue";
@@ -109,7 +123,11 @@ const DocumentsManagementPage: React.FC = () => {
       key: "status",
       sortable: true,
       selector: (row: any) => {
-        return <Badge color={getBadgeColor(row.status)}>{row.status.toUpperCase()}</Badge>;
+        return (
+          <Badge className="max-w-[200px] mt-1" color={getBadgeColor(getDocumentStatus(row))}>
+            <span className="uppercase">{getDocumentStatus(row)}</span>
+          </Badge>
+        );
       },
     },
     {
