@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Tabs, Button } from "flowbite-react";
+import { Modal, Tabs, Button, Badge } from "flowbite-react";
 import { FiPlusCircle, FiTrash2 } from "react-icons/fi";
 import { DocumentInformation, DocumentNoticesList, DocumentNoticeFormModal, DocumentUpdateInformationModal } from "@/components/domains/documents";
 import { LoadingIndicator } from "@/components/shared";
@@ -103,6 +103,37 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     setInfoForm({ show: isOpen });
   };
 
+  const getDocumentStatus = () => {
+    if (documentInformation.documentNotices?.length === 1) {
+      return "pending";
+    }
+
+    if (documentInformation.documentNotices?.length > 1) {
+      return "in-progress";
+    }
+
+    return documentInformation.status;
+  };
+
+  const getBadgeColor = (status: string) => {
+    switch (status) {
+      case "pending":
+        return "yellow";
+
+      case "in-progress":
+        return "blue";
+
+      case "approved":
+        return "green";
+
+      case "archive":
+        return "failure";
+
+      default:
+        return "blue";
+    }
+  };
+
   React.useEffect(() => {
     if (props.show) {
       fetchData();
@@ -138,7 +169,16 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
       ) : null}
 
       <Modal size="6xl" show={props.show} onClose={props.handleClose}>
-        <Modal.Header>Document Information</Modal.Header>
+        <Modal.Header>
+          <div className="flex flex-row items-center gap-3">
+            Document Information
+            {documentInformation ? (
+              <Badge className="max-w-[200px] mt-1" color={getBadgeColor(getDocumentStatus())}>
+                <span className="uppercase">{getDocumentStatus()}</span>
+              </Badge>
+            ) : null}
+          </div>
+        </Modal.Header>
         <Modal.Body className="min-h-[70vh] px-0">
           {!documentInformation ? (
             <LoadingIndicator />
