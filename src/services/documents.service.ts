@@ -99,7 +99,7 @@ export const DocumentsService = {
     return await http
       .post("/documents/decline/" + id)
       .then((response) => {
-        toast.success("Document approved");
+        toast.info("Document declined");
 
         return response.data;
       })
