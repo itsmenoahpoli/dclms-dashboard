@@ -18,7 +18,7 @@ type Props = {
 
 export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
   const { user } = useAuthStore();
-  const { id, revisionNumber, externalUrl, details, nature, requestedBy, approvalDate } = props.data;
+  const { id, documentId, revisionNumber, externalUrl, details, nature, requestedBy, complyBy, approvalDate } = props.data;
 
   const [approveLoading, setApproveLoading] = React.useState<boolean>(false);
   const [noticeForm, setNoticeForm] = React.useState<any>({
@@ -53,10 +53,19 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
     setNoticeForm({ show: isOpen, complyForDetails });
   };
 
+  console.log({
+    details: noticeForm.complyDetails,
+    by: user!.name,
+    type: "comply",
+    documentId,
+  });
+
   const getComplyDetails = () => {
     return {
-      details: noticeForm.complyDetails,
-      by: user!.name,
+      complyDetails: noticeForm.complyDetails,
+      complyBy: user!.name,
+      type: "comply",
+      documentId,
     };
   };
 
@@ -77,7 +86,8 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
           <div className="flex flex-row gap-2">
             <Badge color="blue" className="border border-gray-600">
-              Requested by &mdash; {props.isFirst ? props.originatorName : requestedBy}
+              {complyBy ? "Complied by" : "Requested By"} by &mdash; {complyBy ? complyBy : props.isFirst ? props.originatorName : requestedBy}
+              {props.isFirst ? props.originatorName : requestedBy}
             </Badge>
             <Badge color={getBadgeColor(nature)} className="border border-gray-600">
               {nature.toUpperCase()}
