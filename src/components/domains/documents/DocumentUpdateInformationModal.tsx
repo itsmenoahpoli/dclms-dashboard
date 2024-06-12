@@ -23,9 +23,7 @@ export const DocumentUpdateInformationModal: React.FC<Props> = (props) => {
   const handleSubmitForm = handleSubmit(async (formData: any) => {
     setLoading(true);
 
-    await DocumentsService.updateDocument(props.dataId, props.data);
-
-    console.log(formData, setLoading);
+    await DocumentsService.updateDocument(props.dataId, formData);
   });
 
   return (

@@ -21,7 +21,7 @@ export const SidebarNavItems: React.FC<Props> = (props) => {
     {
       icon: <FiFileText size={ICON_SIZE} />,
       label: "Documents",
-      url: "/dashboard/documents?status=pending",
+      url: "/dashboard/documents",
       show: true,
     },
     // {

@@ -103,18 +103,6 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     setInfoForm({ show: isOpen });
   };
 
-  const getDocumentStatus = () => {
-    if (documentInformation.documentNotices?.length === 1) {
-      return "pending";
-    }
-
-    if (documentInformation.documentNotices?.length > 1) {
-      return "in-progress";
-    }
-
-    return documentInformation.status;
-  };
-
   const getBadgeColor = (status: string) => {
     switch (status) {
       case "pending":
@@ -173,8 +161,8 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
           <div className="flex flex-row items-center gap-3">
             Document Information
             {documentInformation ? (
-              <Badge className="max-w-[200px] mt-1" color={getBadgeColor(getDocumentStatus())}>
-                <span className="uppercase">{getDocumentStatus()}</span>
+              <Badge className="max-w-[200px] mt-1" color={getBadgeColor(documentInformation.status)}>
+                <span className="uppercase">{documentInformation.status}</span>
               </Badge>
             ) : null}
           </div>
