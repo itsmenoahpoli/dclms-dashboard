@@ -45,7 +45,10 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
       formData["type"] = "document-controller-request";
     }
 
-    await DocumentNoticesService.createDocumentNotice(formData, setLoading).finally(() => reset());
+    await DocumentNoticesService.createDocumentNotice(
+      { ...formData, complyDetails: props.complyDetails?.details || null, complyBy: props.complyDetails?.by || null },
+      setLoading
+    ).finally(() => reset());
     props.fetchDocumentNotices();
     props.handleClose();
   });

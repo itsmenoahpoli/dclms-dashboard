@@ -55,8 +55,8 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
   const getComplyDetails = () => {
     return {
-      complyDetails: noticeForm.complyDetails,
-      complyBy: user!.name,
+      details: noticeForm.complyDetails,
+      by: user!.name,
     };
   };
 
