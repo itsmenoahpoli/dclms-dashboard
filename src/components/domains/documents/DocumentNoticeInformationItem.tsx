@@ -161,7 +161,7 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
             </Button>
           ) : null}
 
-          {IS_ORIGINATOR && !props.isFirst && !approvalDate ? (
+          {IS_ORIGINATOR && !props.isFirst && !approvalDate && requestedBy === "Document Controller" ? (
             <Button size="xs" color="success" className="w-1/2" onClick={() => handleNoticeForm(true, details)}>
               Comply
             </Button>
