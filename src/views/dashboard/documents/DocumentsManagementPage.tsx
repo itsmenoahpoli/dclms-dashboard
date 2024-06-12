@@ -53,18 +53,7 @@ const DocumentsManagementPage: React.FC = () => {
 
   const handleCloseViewDocument = () => {
     setInformationModal({ show: false, selectedDataId: undefined });
-  };
-
-  const getDocumentStatus = (documentInformation: any) => {
-    if (documentInformation.documentNotices?.length === 1) {
-      return "pending";
-    }
-
-    if (documentInformation.documentNotices?.length > 1) {
-      return "in-progress";
-    }
-
-    return documentInformation.status;
+    navigate(`/dashboard/documents?status=pending`);
   };
 
   const getBadgeColor = (status: string) => {
@@ -79,6 +68,7 @@ const DocumentsManagementPage: React.FC = () => {
         return "green";
 
       case "archive":
+      case "declined":
         return "failure";
 
       default:
@@ -129,8 +119,8 @@ const DocumentsManagementPage: React.FC = () => {
       sortable: true,
       selector: (row: any) => {
         return (
-          <Badge className="max-w-[200px] mt-1" color={getBadgeColor(getDocumentStatus(row))}>
-            <span className="uppercase">{getDocumentStatus(row)}</span>
+          <Badge className="max-w-[200px] mt-1" color={getBadgeColor(row.status)}>
+            <span className="uppercase">{row.status}</span>
           </Badge>
         );
       },
@@ -202,6 +192,12 @@ const DocumentsManagementPage: React.FC = () => {
         <div className="w-full flex flex-col gap-1">
           <p className="text-xs text-gray-500">Search</p>
           <input className="h-[35px]" placeholder="By name, series number, department" />
+        </div>
+        <div className="w-full flex flex-col gap-1">
+          <p className="text-xs text-gray-500">Filter by status</p>
+          <select className="h-[35px]">
+            <option value=""></option>
+          </select>
         </div>
         <div className="w-full flex flex-col gap-1">
           <p className="text-xs text-gray-500">Filter by source document</p>

@@ -20,7 +20,7 @@ export const SidebarNavItems: React.FC<Props> = (props) => {
     },
     {
       icon: <FiFileText size={ICON_SIZE} />,
-      label: "Documents (Pending)",
+      label: "Documents",
       url: "/dashboard/documents?status=pending",
       show: true,
     },
@@ -38,7 +38,7 @@ export const SidebarNavItems: React.FC<Props> = (props) => {
     // },
     {
       icon: <FiArchive size={ICON_SIZE} />,
-      label: "Documents (Archived)",
+      label: "Archived Documents",
       url: "/dashboard/document-archives",
       show: true,
     },
