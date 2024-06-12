@@ -6,6 +6,7 @@ type Props = {
   sourceDocumentType: string;
   documentNotices?: any[];
   originatorName?: string;
+  origExternalUrl?: string;
   refetch: () => void;
 };
 
@@ -22,6 +23,7 @@ export const DocumentNoticesList: React.FC<Props> = (props) => {
           data={notice}
           isFirst={idx === 0}
           originatorName={props.originatorName}
+          origExternalUrl={props.origExternalUrl}
           sourceDocumentType={props.sourceDocumentType}
           showActionButtons={IS_DC || IS_QMR}
           refetch={props.refetch}

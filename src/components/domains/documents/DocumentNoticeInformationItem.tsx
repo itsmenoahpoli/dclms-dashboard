@@ -9,6 +9,7 @@ type Props = {
   sourceDocumentType: string;
   data?: any;
   originatorName?: string;
+  origExternalUrl?: string;
   isFirst?: boolean;
   refetch: () => void;
 };
@@ -63,21 +64,31 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
             <p className="font-medium">Source Document Type</p>
             <p className="text-sm text-gray-700">{props.sourceDocumentType}</p>
           </div>
+          {props.origExternalUrl && props.isFirst ? (
+            <div>
+              <p className="font-medium">External Url</p>
+              <div className="w-3/4 break-words text-wrap">
+                <p className="text-sm text-gray-700 ">
+                  <a href={props.origExternalUrl} target="_blank" className="text-blue-600 underline text-ellipsis overflow-hidden w-[500px]">
+                    {props.origExternalUrl}
+                  </a>
+                </p>
+              </div>
+            </div>
+          ) : null}
 
-          <div>
-            <p className="font-medium">External Url</p>
-            <div className="w-3/4 break-words text-wrap">
-              <p className="text-sm text-gray-700 ">
-                {externalUrl ? (
+          {!props.isFirst && externalUrl ? (
+            <div>
+              <p className="font-medium">External Url</p>
+              <div className="w-3/4 break-words text-wrap">
+                <p className="text-sm text-gray-700 ">
                   <a href={externalUrl} target="_blank" className="text-blue-600 underline text-ellipsis overflow-hidden w-[500px]">
                     {externalUrl}
                   </a>
-                ) : (
-                  "--"
-                )}
-              </p>
+                </p>
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div>
             <p className="font-medium">Details</p>

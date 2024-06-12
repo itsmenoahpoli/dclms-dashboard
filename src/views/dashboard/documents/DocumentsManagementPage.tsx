@@ -48,12 +48,12 @@ const DocumentsManagementPage: React.FC = () => {
   };
 
   const handleViewDocument = (id: number) => {
-    navigate(`/dashboard/documents?status=pending&id=${id}`);
+    navigate(`/dashboard/documents?id=${id}`);
   };
 
   const handleCloseViewDocument = () => {
     setInformationModal({ show: false, selectedDataId: undefined });
-    navigate(`/dashboard/documents?status=pending`);
+    navigate(`/dashboard/documents`);
   };
 
   const getBadgeColor = (status: string) => {
@@ -166,7 +166,12 @@ const DocumentsManagementPage: React.FC = () => {
         handleClose={() => handleFormModal({ show: false, selectedData: undefined })}
       />
 
-      <DocumentInformationModal show={informationModal.show} dataId={informationModal.selectedDataId} handleClose={handleCloseViewDocument} />
+      <DocumentInformationModal
+        show={informationModal.show}
+        dataId={informationModal.selectedDataId}
+        refetch={refetch}
+        handleClose={handleCloseViewDocument}
+      />
 
       <PageHeader
         title="Documents Management"

@@ -126,7 +126,7 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex flex-row justify-end gap-3 mt-5">
-            <Button color="success" type="submit" disabled={loading || !validLink}>
+            <Button color="success" type="submit" disabled={loading}>
               {loading ? <Spinner /> : "Submit Notice"}
             </Button>
             <Button color="light" onClick={props.handleClose}>

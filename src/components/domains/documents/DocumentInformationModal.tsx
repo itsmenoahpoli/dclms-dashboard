@@ -10,6 +10,7 @@ import { IS_ORIGINATOR } from "@/constants";
 type Props = {
   show: boolean;
   dataId?: number;
+  refetch: () => void;
   handleClose: () => void;
 };
 
@@ -74,10 +75,12 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
     setUpdateStatusLoading(true);
 
     if (type === "approved") {
-      return await DocumentsService.approveDocument(documentInformation.id, setUpdateStatusLoading);
+      await DocumentsService.approveDocument(documentInformation.id, setUpdateStatusLoading);
+    } else {
+      await DocumentsService.declineDocument(documentInformation.id, setUpdateStatusLoading);
     }
 
-    return await DocumentsService.declineDocument(documentInformation.id, setUpdateStatusLoading);
+    props.refetch();
   };
 
   const handleNoticeForm = (isOpen: boolean, isDeletion: boolean = false) => {
@@ -115,11 +118,20 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
         return "green";
 
       case "archive":
+      case "declined":
         return "failure";
 
       default:
         return "blue";
     }
+  };
+
+  const isDocumentCtaDisabled = () => {
+    if (documentInformation.status === "declined") {
+      return true;
+    }
+
+    return updateStatusLoading;
   };
 
   React.useEffect(() => {
@@ -180,6 +192,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
               <Tabs.Item title="Document Notices (from DC/QMR)">
                 <DocumentNoticesList
                   originatorName={documentInformation.originatorName}
+                  origExternalUrl={documentInformation.externalUrl}
                   documentNotices={documentInformation.documentNotices}
                   sourceDocumentType={documentInformation.sourceDocument}
                   refetch={fetchData}
@@ -188,57 +201,56 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
             </Tabs>
           )}
         </Modal.Body>
-        {documentInformation && documentInformation.status === "pending" ? (
-          <Modal.Footer>
-            <div className="w-full flex flex-row justify-between gap-3">
-              <div className="flex flex-row justify-between gap-2">
-                {documentInformation?.documentNotices ? (
-                  <>
-                    <Button
-                      color="blue"
-                      className="flex flex-row items-center"
-                      disabled={checkDisableAddNotice()}
-                      onClick={() => handleNoticeForm(true)}
-                    >
-                      <FiPlusCircle size={22} />
-                      &nbsp; Add Revision Notice
-                    </Button>
-
-                    {IS_ORIGINATOR ? (
+        {documentInformation ? (
+          documentInformation.status === "pending" || documentInformation.status === "in-progress" ? (
+            <Modal.Footer>
+              <div className="w-full flex flex-row justify-between gap-3">
+                <div className="flex flex-row justify-between gap-2">
+                  {documentInformation?.documentNotices ? (
+                    <>
                       <Button
-                        color="failure"
+                        color="blue"
                         className="flex flex-row items-center"
-                        disabled={checkNoticesHasArchiveRequest()}
-                        onClick={() => handleNoticeForm(true, true)}
+                        disabled={checkDisableAddNotice()}
+                        onClick={() => handleNoticeForm(true)}
                       >
-                        <FiTrash2 size={22} />
-                        &nbsp; Archive
+                        <FiPlusCircle size={22} />
+                        &nbsp; Add Revision Notice
                       </Button>
-                    ) : null}
-                  </>
-                ) : null}
-              </div>
 
-              <div className="flex flex-row gap-2">
-                {/* {IS_ORIGINATOR ? (
-                  <Button color="blue" className="flex flex-row items-center !bg-blue-900" onClick={() => handleInfoForm(true)}>
-                    <FiEdit3 size={22} />
-                    &nbsp; Update Information
-                  </Button>
-                ) : null} */}
-                {!IS_ORIGINATOR && documentInformation && documentInformation.status === "pending" && checkApprovalStatus() ? (
-                  <>
-                    <Button color="success" onClick={() => handleUpdateStatus("approved")} disabled={updateStatusLoading}>
-                      Approve Document
-                    </Button>
-                    <Button color="red" onClick={() => handleUpdateStatus("declined")} disabled={updateStatusLoading}>
-                      Decline Document
-                    </Button>
-                  </>
-                ) : null}
+                      {IS_ORIGINATOR ? (
+                        <Button
+                          color="failure"
+                          className="flex flex-row items-center"
+                          disabled={checkNoticesHasArchiveRequest()}
+                          onClick={() => handleNoticeForm(true, true)}
+                        >
+                          <FiTrash2 size={22} />
+                          &nbsp; Archive
+                        </Button>
+                      ) : null}
+                    </>
+                  ) : null}
+                </div>
+
+                <div className="flex flex-row gap-2">
+                  {!IS_ORIGINATOR &&
+                  documentInformation &&
+                  checkApprovalStatus() &&
+                  (documentInformation.status === "pending" || documentInformation.status === "in-progress") ? (
+                    <>
+                      <Button color="success" onClick={() => handleUpdateStatus("approved")} disabled={isDocumentCtaDisabled()}>
+                        Approve Document
+                      </Button>
+                      <Button color="red" onClick={() => handleUpdateStatus("declined")} disabled={isDocumentCtaDisabled()}>
+                        Decline Document
+                      </Button>
+                    </>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          </Modal.Footer>
+            </Modal.Footer>
+          ) : null
         ) : null}
       </Modal>
     </>
