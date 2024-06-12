@@ -101,7 +101,12 @@ const DocumentArchivesManagementPage: React.FC = () => {
 
   return (
     <div>
-      <DocumentInformationModal show={informationModal.show} dataId={informationModal.selectedDataId} handleClose={handleCloseViewDocument} />
+      <DocumentInformationModal
+        refetch={refetch}
+        show={informationModal.show}
+        dataId={informationModal.selectedDataId}
+        handleClose={handleCloseViewDocument}
+      />
 
       <PageHeader title="Document Archives Management" subtitle="View and manage documents that are in archives" breadcrumbs={["Documents Archives"]}>
         <div className="flex justify-end">
