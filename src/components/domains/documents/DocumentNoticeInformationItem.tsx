@@ -64,6 +64,7 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
     <>
       <DocumentNoticeFormModal
         show={noticeForm.show}
+        sourceDocument={props.sourceDocumentType}
         fetchDocumentNotices={() => null}
         handleClose={() => handleNoticeForm(false)}
         complyDetails={getComplyDetails()}
