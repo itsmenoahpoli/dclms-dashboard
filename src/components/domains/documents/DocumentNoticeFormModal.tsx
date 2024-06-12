@@ -100,15 +100,17 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <p className="text-sm">
-              <span className="text-red-600 mr-1">*</span>
-              External Link/URL
-            </p>
-            {!validLink ? <p className="text-xs text-red-600">Must be a valid HAU sharepoint url</p> : null}
-            <input type="url" {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
-            <p className="text-xs text-gray-600">Make sure the url is public</p>
-          </div>
+          {IS_ORIGINATOR ? (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm">
+                <span className="text-red-600 mr-1">*</span>
+                External Link/URL
+              </p>
+              {!validLink ? <p className="text-xs text-red-600">Must be a valid HAU sharepoint url</p> : null}
+              <input type="url" {...register("externalUrl")} onChange={(e) => handleValidateDocumentLink(e.target.value)} required />
+              <p className="text-xs text-gray-600">Make sure the url is public</p>
+            </div>
+          ) : null}
 
           <div className="flex flex-col gap-2">
             <p className="text-sm">
