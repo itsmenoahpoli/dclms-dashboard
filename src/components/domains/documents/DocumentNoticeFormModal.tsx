@@ -5,11 +5,13 @@ import { DocumentNoticesService } from "@/services";
 import { IS_ORIGINATOR } from "@/constants";
 
 type Props = {
-  documentExternalUrl: string;
-  sourceDocument: string;
-  documentId: number;
+  documentExternalUrl?: string;
+  sourceDocument?: string;
+  documentId?: number;
   show: boolean;
   isDeletion?: boolean;
+  isOriginatorComply?: boolean;
+  complyDetails?: any;
   fetchDocumentNotices: () => void;
   handleClose: () => void;
 };
@@ -24,7 +26,7 @@ const sourceDocumentTypes = ["Quality Management", "Procedures Manual", "Forms M
 export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
   const { handleSubmit, register, reset, setValue } = useForm({
     defaultValues: {
-      documentId: +props.documentId,
+      documentId: props.documentId ? +props.documentId : "",
       details: "",
       nature: "revision",
       externalUrl: "",
@@ -70,15 +72,17 @@ export const DocumentNoticeFormModal: React.FC<Props> = (props) => {
 
   return (
     <Modal size="5xl" show={props.show} onClose={props.handleClose}>
-      <Modal.Header>Document Notice Form</Modal.Header>
+      <Modal.Header>Document Notice Form {props.isOriginatorComply ? "(Comply)" : null}</Modal.Header>
       <Modal.Body>
         <form className="flex flex-col gap-3 text-sm" onSubmit={handleNoticeSubmit}>
-          <p>
-            Document Reference: &nbsp;
-            <a href={props.documentExternalUrl} className="text-blue-700 underline" target="_blank">
-              {props.documentExternalUrl}
-            </a>
-          </p>
+          {props.documentExternalUrl ? (
+            <p>
+              Document Reference: &nbsp;
+              <a href={props.documentExternalUrl} className="text-blue-700 underline" target="_blank">
+                {props.documentExternalUrl}
+              </a>
+            </p>
+          ) : null}
 
           <hr />
 

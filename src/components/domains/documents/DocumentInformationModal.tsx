@@ -85,7 +85,6 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
 
   const handleNoticeForm = (isOpen: boolean, isDeletion: boolean = false) => {
     if (IS_ORIGINATOR && isDeletion) {
-      console.log(IS_ORIGINATOR);
       return showConfirm({
         open: true,
         title: "Confirm",
