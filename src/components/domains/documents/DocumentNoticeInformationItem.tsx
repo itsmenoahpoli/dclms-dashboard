@@ -18,7 +18,7 @@ type Props = {
 
 export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
   const { user } = useAuthStore();
-  const { id, documentId, revisionNumber, externalUrl, details, nature, requestedBy, complyBy, approvalDate } = props.data;
+  const { id, documentId, revisionNumber, externalUrl, details, nature, requestedBy, complyBy, approvalDate, documentNoticeComply } = props.data;
 
   const [approveLoading, setApproveLoading] = React.useState<boolean>(false);
   const [noticeForm, setNoticeForm] = React.useState<any>({
@@ -86,7 +86,7 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
           <div className="flex flex-row gap-2">
             <Badge color="blue" className="border border-gray-600">
-              {complyBy ? "Complied by" : "Requested By"} by &mdash; {complyBy ? complyBy : props.isFirst ? props.originatorName : requestedBy}
+              {complyBy ? "Complied by" : "Requested By"} by &mdash; {props.isFirst ? props.originatorName : requestedBy}
               {props.isFirst ? props.originatorName : requestedBy}
             </Badge>
             <Badge color={getBadgeColor(nature)} className="border border-gray-600">
@@ -152,6 +152,70 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
               </p>
             </div>
           </div>
+        </div>
+
+        {documentNoticeComply && documentNoticeComply.length ? (
+          <div className="p-3">
+            <div className="w-full bg-white rounded shadow p-4">
+              <p className="text-sm text-gray-700 font-bold">Comply Details</p>
+
+              <div className="flex flex-row justify-between py-2">
+                <div className="flex flex-col gap-4 text-sm w-1/4">
+                  <div>
+                    <p className="font-medium">Date Submitted</p>
+                    <p className="text-sm text-gray-700">{datesUtils.formatDate(documentNoticeComply[0].createdAt)}</p>
+                  </div>
+
+                  <div>
+                    <p className="font-medium">Details</p>
+                    <p className="text-sm text-gray-700">{documentNoticeComply[0].details}</p>
+                  </div>
+
+                  <div>
+                    <p className="font-medium">Page No.</p>
+                    <p className="text-sm text-gray-700">{documentNoticeComply[0].pageNumber}</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-4 text-sm w-2/4">
+                  <div>
+                    <p className="font-medium">External Url</p>
+                    <div className="w-3/4 break-words text-wrap">
+                      <p className="text-sm text-gray-700 ">
+                        <a
+                          href={documentNoticeComply[0].externalUrl}
+                          target="_blank"
+                          className="text-blue-600 underline text-ellipsis overflow-hidden w-[500px]"
+                        >
+                          {documentNoticeComply[0].externalUrl}
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="font-medium">Details</p>
+                    <p className="text-sm text-gray-700">{documentNoticeComply[0].details}</p>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+
+              <div className="flex flex-row gap-3 pt-5">
+                <Button size="xs" color="success">
+                  Approve
+                </Button>
+                <Button size="xs" color="failure">
+                  Decline
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="pb-10">
+          <hr />
         </div>
 
         <div className="w-1/3 flex flex-col gap-2">
