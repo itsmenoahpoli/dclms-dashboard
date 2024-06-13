@@ -2,7 +2,7 @@ import React from "react";
 import { Badge, Button, Spinner } from "flowbite-react";
 import { DocumentNoticeFormModal } from "@/components/domains/documents";
 import { DocumentNoticesService } from "@/services";
-import { IS_DC, IS_ORIGINATOR } from "@/constants";
+import { IS_DC, IS_ORIGINATOR, IS_SUPERADMIN } from "@/constants";
 import { useAuthStore } from "@/stores";
 import { datesUtils } from "@/utils";
 
@@ -219,7 +219,7 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
         </div>
 
         <div className="w-1/3 flex flex-col gap-2">
-          {IS_DC && !approvalDate && props.showActionButtons ? (
+          {(IS_DC || IS_SUPERADMIN) && !approvalDate && props.showActionButtons ? (
             <Button size="xs" color="success" className="w-1/2" disabled={approveLoading} onClick={() => handleApproveNotice(id)}>
               {approveLoading ? <Spinner /> : "Approve"}
             </Button>

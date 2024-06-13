@@ -1,6 +1,6 @@
 import React from "react";
 import { DocumentNoticeInformationItem } from "@/components/domains/documents";
-import { IS_DC, IS_QMR } from "@/constants";
+import { IS_DC, IS_QMR, IS_SUPERADMIN } from "@/constants";
 
 type Props = {
   sourceDocumentType: string;
@@ -25,7 +25,7 @@ export const DocumentNoticesList: React.FC<Props> = (props) => {
           originatorName={props.originatorName}
           origExternalUrl={props.origExternalUrl}
           sourceDocumentType={props.sourceDocumentType}
-          showActionButtons={IS_DC || IS_QMR}
+          showActionButtons={IS_DC || IS_QMR || IS_SUPERADMIN}
           refetch={props.refetch}
         />
       ))}
