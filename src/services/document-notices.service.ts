@@ -41,4 +41,19 @@ export const DocumentNoticesService = {
       })
       .finally(() => setApproveLoading(false));
   },
+
+  createDocumentComplyNotice: async function (data: any, setLoading: React.Dispatch<React.SetStateAction<boolean>>) {
+    return await http
+      .post("/document-notices/comply/add", data)
+      .then((response) => {
+        toast.success("Successfully create document notice comply");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to create document notice comply");
+      })
+      .finally(() => setLoading(false));
+  },
 };
