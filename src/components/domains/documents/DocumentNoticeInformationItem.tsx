@@ -1,8 +1,8 @@
 import React from "react";
-import { Badge, Button, Spinner } from "flowbite-react";
+import { Badge, Button } from "flowbite-react";
 import { DocumentNoticeFormModal } from "@/components/domains/documents";
 import { DocumentNoticesService } from "@/services";
-import { IS_DC, IS_ORIGINATOR, IS_SUPERADMIN } from "@/constants";
+import { IS_ORIGINATOR } from "@/constants";
 import { useAuthStore } from "@/stores";
 import { datesUtils } from "@/utils";
 
@@ -25,6 +25,8 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
     show: false,
     complyForDetails: "",
   });
+
+  console.log(approveLoading);
 
   const handleApproveNotice = async (noticeId: number) => {
     setApproveLoading(true);
@@ -68,6 +70,19 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
       documentNoticeId: +id,
       documentId,
     };
+  };
+
+  const handleUpdateComply = async (documentNoticeComplyId: number, status: "approved" | "declined") => {
+    const data = {
+      documentNoticeComplyId,
+      status,
+    };
+
+    if (status === "approved") {
+      await handleApproveNotice(id);
+    }
+
+    return await DocumentNoticesService.updateDocumentNoticeComplyStatus(data).finally(() => props.refetch());
   };
 
   return (
@@ -207,12 +222,12 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
 
               <hr />
 
-              {!IS_ORIGINATOR ? (
+              {!IS_ORIGINATOR && documentNoticeComply[0].status === "pending" ? (
                 <div className="flex flex-row gap-3 pt-5">
-                  <Button size="xs" color="success">
+                  <Button size="xs" color="success" onClick={() => handleUpdateComply(documentNoticeComply[0].id, "approved")}>
                     Approve
                   </Button>
-                  <Button size="xs" color="failure">
+                  <Button size="xs" color="failure" onClick={() => handleUpdateComply(documentNoticeComply[0].id, "declined")}>
                     Decline
                   </Button>
                 </div>
@@ -226,11 +241,11 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
         </div>
 
         <div className="w-1/3 flex flex-col gap-2">
-          {(IS_DC || IS_SUPERADMIN) && !approvalDate && props.showActionButtons ? (
+          {/* {(IS_DC || IS_SUPERADMIN) && !approvalDate && props.showActionButtons ? (
             <Button size="xs" color="success" className="w-1/2" disabled={approveLoading} onClick={() => handleApproveNotice(id)}>
               {approveLoading ? <Spinner /> : "Approve"}
             </Button>
-          ) : null}
+          ) : null} */}
 
           {IS_ORIGINATOR && !props.isFirst && !approvalDate && requestedBy === "Document Controller" ? (
             <Button size="xs" color="success" className="w-1/2" onClick={() => handleNoticeForm(true, details)}>

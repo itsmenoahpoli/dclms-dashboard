@@ -56,4 +56,18 @@ export const DocumentNoticesService = {
       })
       .finally(() => setLoading(false));
   },
+
+  updateDocumentNoticeComplyStatus: async function (data: any) {
+    return await http
+      .patch(`/document-notices/comply-notice/${data.documentNoticeComplyId}/${data.status}`)
+      .then((response) => {
+        toast.success("Successfully updated document notice comply status");
+
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Failed to update document notice comply status");
+      });
+  },
 };
