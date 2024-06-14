@@ -32,6 +32,7 @@ export const DocumentInformationModal: React.FC<Props> = (props) => {
   }, [props.dataId]);
 
   const checkApprovalStatus = () => {
+    return true;
     if (documentInformation) {
       const { documentNotices } = documentInformation;
 
