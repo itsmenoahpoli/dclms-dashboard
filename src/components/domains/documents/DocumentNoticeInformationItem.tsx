@@ -88,7 +88,6 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
           <div className="flex flex-row gap-2">
             <Badge color="blue" className="border border-gray-600">
               {complyBy ? "Complied by" : "Requested By"} by &mdash; {props.isFirst ? props.originatorName : requestedBy}
-              {props.isFirst ? props.originatorName : requestedBy}
             </Badge>
             <Badge color={getBadgeColor(nature)} className="border border-gray-600">
               {nature.toUpperCase()}
