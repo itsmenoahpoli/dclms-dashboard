@@ -65,6 +65,7 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
       complyDetails: noticeForm.complyDetails,
       complyBy: user!.name,
       type: "comply",
+      documentNoticeId: +id,
       documentId,
     };
   };
@@ -197,19 +198,26 @@ export const DocumentNoticeInformationItem: React.FC<Props> = (props: any) => {
                     <p className="font-medium">Details</p>
                     <p className="text-sm text-gray-700">{documentNoticeComply[0].details}</p>
                   </div>
+
+                  <div>
+                    <p className="font-medium">Status</p>
+                    <p className="text-sm text-gray-700 uppercase font-bold">{documentNoticeComply[0].status}</p>
+                  </div>
                 </div>
               </div>
 
               <hr />
 
-              <div className="flex flex-row gap-3 pt-5">
-                <Button size="xs" color="success">
-                  Approve
-                </Button>
-                <Button size="xs" color="failure">
-                  Decline
-                </Button>
-              </div>
+              {!IS_ORIGINATOR ? (
+                <div className="flex flex-row gap-3 pt-5">
+                  <Button size="xs" color="success">
+                    Approve
+                  </Button>
+                  <Button size="xs" color="failure">
+                    Decline
+                  </Button>
+                </div>
+              ) : null}
             </div>
           </div>
         ) : null}

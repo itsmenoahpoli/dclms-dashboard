@@ -8,6 +8,7 @@ type Props = {
   documentExternalUrl?: string;
   sourceDocument?: string;
   documentId?: number;
+  documentNoticeId?: number;
   show: boolean;
   isDeletion?: boolean;
   isOriginatorComply?: boolean;
